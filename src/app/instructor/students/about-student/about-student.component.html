@@ -1,0 +1,329 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Student Profile</h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- Your content goes here  -->
+      <div class="row clearfix">
+        <div class="col-lg-4 col-md-12">
+          <div class="card">
+            <div class="m-b-20">
+              <div class="contact-grid">
+                <div class="profile-header bg-dark">
+                  <div class="user-name">{{studentData?.name}}</div>
+                  <div class="name-center">{{studentData?.nricType}}</div>
+                </div>
+                <img src="{{apiURL+'/'+studentData.profile_img}}" class="user-img" alt="">
+                <p>
+                  {{studentData?.address_nric}}
+                  <br />{{studentData?.state}}
+                </p>
+                <div>
+                  <span class="phone">
+                    <i class="material-icons">phone</i>{{studentData?.mobile_number}}</span>
+                </div>
+                <div class="row">
+                  <div class="col-4">
+                    <!-- <h5>564</h5>
+                    <small>Following</small> -->
+                  </div>
+                  <div class="col-4">
+                    <h5>{{studentData?.status}}</h5>
+                    <small>Status</small>
+                  </div>
+                  <div class="col-4">
+                    <!-- <h5>565</h5>
+                    <small>Post</small> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="card">
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab label="About">
+                <div class="p-4">
+                  <p class="text-default">Hello I am Sarah Smith a student in Sanjivni College Surat. I love
+                    to study with all my class friends and professors.</p>
+                  <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                      <b>Gender </b>
+                      <div class="profile-desc-item float-end">Female</div>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Lectures Taken </b>
+                      <div class="profile-desc-item float-end">11k+</div>
+                    </li>
+                    <li class="list-group-item">
+                      <b>Department </b>
+                      <div class="profile-desc-item float-end">Computer Engineering</div>
+                    </li>
+                  </ul>
+                </div>
+              </mat-tab>
+              <mat-tab label="Skills">
+                <ul class="list-unstyled p-4">
+                  <li>
+                    <div>Study</div>
+                    <div class="progress skill-progress m-b-20">
+                      <div class="progress-bar l-bg-green width-per-45" role="progressbar" aria-valuenow="45"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>Cricket</div>
+                    <div class="progress skill-progress m-b-20">
+                      <div class="progress-bar l-bg-orange width-per-38" role="progressbar" aria-valuenow="38"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>Music</div>
+                    <div class="progress skill-progress m-b-20">
+                      <div class="progress-bar l-bg-cyan width-per-39" role="progressbar" aria-valuenow="39"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </li>
+                  <li>
+                    <div>Yoga</div>
+                    <div class="progress skill-progress m-b-20">
+                      <div class="progress-bar l-bg-purple width-per-70" role="progressbar" aria-valuenow="70"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </li>
+                </ul>
+              </mat-tab>
+            </mat-tab-group>
+          </div> -->
+        </div>
+  
+        <div class="col-lg-8 col-md-12">
+          <div class="card">
+            <mat-tab-group>
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon msr-2">face</mat-icon>
+                  About Me
+                </ng-template>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>{{'STUDENT-REGISTRATION.SUBTITLE1' | translate}}</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul class="list-group list-group-unbordered">
+                          <li class="list-group-item">
+                            <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.name}}</div>
+                          </li>
+                          <li class="list-group-item">
+                            <b> {{'STUDENT-REGISTRATION.LIST.IC-TYPE' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.nricType}}</div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentData?.nric_number">
+                            <b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.nric_number}}</div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentData?.passport_number">
+                              <b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}} </b>
+                              <div class="profile-desc-item float-end">{{studentData?.passport_number}}</div>
+                            </li>
+                            <li class="list-group-item">
+                              <b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}} </b>
+                              <div class="profile-desc-item float-end">{{studentData?.date_of_birth | date:'dd-MM-yyyy'}}</div>
+                            </li>
+                            <li class="list-group-item">
+                              <b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}} </b>
+                              <div class="profile-desc-item float-end">{{studentData?.gender}}</div>
+                            </li>
+                            <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.PLACEBIRTH' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.placeBirth}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.NATIONALITY' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.country_name}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.address_nric}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.ADDRESS1' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.address1}}</div>
+                              </li>
+  
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.ADDRESS2' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.address2}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.POSTAL-CODE' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.postal_code}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.city}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.state}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.email_id}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.mobile_number}}</div>
+                              </li>
+                              <li class="list-group-item">
+                                <b>{{'STUDENT-REGISTRATION.LIST.RACE' | translate}} </b>
+                                <div class="profile-desc-item float-end">{{studentData?.race}}</div>
+                              </li>
+                                <li class="list-group-item" *ngIf="studentData.other_race">
+                                  <b>{{'STUDENT-REGISTRATION.LIST.OTHERRACE' | translate}} </b>
+                                  <div class="profile-desc-item float-end">{{studentData?.other_race}}</div>
+                                </li>
+  
+                        </ul>
+                      <br>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>Education</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul>
+                        <li>Schooling at sarvoday vidhyalay, Mumbai</li>
+                        <li>Betchler In Arts in Bhagvati College Hariyana</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                  <div class="project_widget">
+                    <div class="header">
+                      <h2><strong>Certificates</strong></h2>
+                    </div>
+                    <div class="body">
+                      <ul>
+                        <li>1st Prise in Music competition</li>
+                        <li>1st Prise in Acting & Drama</li>
+                        <li>Gold Medal in Betchler in Arts</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+              </mat-tab>
+  
+              <mat-tab>
+                <ng-template mat-tab-label>
+                  <mat-icon class="example-tab-icon msr-2">info</mat-icon>
+                  {{'STUDENT-REGISTRATION.SUBTITLE2' | translate}}
+                </ng-template>
+                <div class="header">
+                  <h2>
+                    <strong>{{'STUDENT-REGISTRATION.SUBTITLE2' | translate}}</strong></h2>
+                </div>
+                <div class="body">
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                          <b>{{'STUDENT-REGISTRATION.LIST.PREFERENCE' | translate}} </b>
+                          <div class="profile-desc-item float-end">{{studentData?.preference}}</div>
+                        </li>
+                        <li class="list-group-item" *ngIf="studentData.emergency_number">
+                          <b> {{'STUDENT-REGISTRATION.LIST.EMERGENCY-NAME' | translate}} </b>
+                          <div class="profile-desc-item float-end">{{studentData?.emergency_name}}</div>
+                        </li>
+                        <li class="list-group-item" *ngIf="studentData.emergency_number">
+                          <b>{{'STUDENT-REGISTRATION.LIST.EMERGENCY-NUMBER' | translate}} </b>
+                          <div class="profile-desc-item float-end">{{studentData?.emergency_number}}</div>
+                        </li>
+                        <li class="list-group-item" *ngIf="studentData.user_name">
+                            <b>{{'STUDENT-REGISTRATION.LIST.USERNAME' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.user_name}}</div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentData.password">
+                            <b>{{'STUDENT-REGISTRATION.LIST.PASSWORD' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.password}}</div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentData.existenceLicense">
+                            <b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE' | translate}} </b>
+                            <div class="profile-desc-item float-end">{{studentData?.existenceLicense}}</div>
+                          </li>
+                          <li class="list-group-item">
+                              <b>{{'STUDENT-REGISTRATION.LIST.EXPIRYDATE' | translate}} </b>
+                              <div class="profile-desc-item float-end">{{studentData?.license_expiry_date | date:'dd-MM-yyyy'}}</div>
+                            </li>
+                      </ul>
+                    <br>
+                  </div>
+              </mat-tab>
+  
+              <mat-tab>
+                  <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon msr-2">file_present</mat-icon>
+                    {{'STUDENT-REGISTRATION.SUBTITLE4' | translate}}
+                  </ng-template>
+                  <div class="header">
+                    <h2>
+                      <strong>{{'STUDENT-REGISTRATION.SUBTITLE4' | translate}}</strong></h2>
+                  </div>
+                  <div class="body">
+                      <ul class="list-group list-group-unbordered"> 
+                          <li class="list-group-item" *ngIf="studentDocData?.nric_front">
+                            <b>{{'STUDENT-REGISTRATION.LIST.NRIC-FRONT' | translate}} </b>
+                            <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData?.nric_front}}" style="width:100%;height:100%"></div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentDocData.nric_rear">
+                            <b> {{'STUDENT-REGISTRATION.LIST.NRIC-REAR' | translate}} </b>
+                            <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData?.nric_rear}}" style="width:100%;height:100%"></div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentDocData?.passport_front">
+                            <b>{{'STUDENT-REGISTRATION.LIST.PASSPORT-FRONT' | translate}} </b>
+                            <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData?.passport_front}}" style="width:100%;height:100%"></div>
+                          </li>
+                          <li class="list-group-item" *ngIf="studentDocData?.work_permit_front">
+                              <b>{{'STUDENT-REGISTRATION.LIST.WORK-PERMIT' | translate}} </b>
+                              <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData?.work_permit_front}}" style="width:100%;height:100%"></div>
+                            </li>
+                            <li class="list-group-item" *ngIf="studentDocData?.existing_license_front">
+                              <b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-FRONT' | translate}} </b>
+                              <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData.existing_license_front}}" style="width:100%;height:100%"></div>
+                            </li>
+                            <li class="list-group-item" *ngIf="studentDocData?.existing_license_rear">
+                              <b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-REAR' | translate}} </b>
+                              <div class="profile-desc-item float-end"><img src="{{apiURL+'/'+studentDocData.existing_license_rear}}" style="width:100%;height:100%"></div>
+                            </li>
+                           
+                        </ul>  
+                      <br>
+                    </div>    
+                </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

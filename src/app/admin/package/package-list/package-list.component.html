@@ -1,0 +1,136 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="breadcrumb breadcrumb-style ">
+                  <li class="breadcrumb-item">
+                    <h4 class="page-title">{{'PACKAGE.LISTTITLE' | translate}}</h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                  <div class="mt-5">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="body">
+                          <div class="table-responsive">
+                            <div class="materialTableHeader">
+                              <div class="row">
+                                <div class="col-8">
+                                  <ul class="header-buttons-left ml-0">
+                                    <li class="dropdown">
+                                      <h2>
+                                        <strong>{{'PACKAGE.LISTTITLE' | translate}}</strong></h2>
+                                    </li>
+                                    <li class="dropdown m-l-20">
+                                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                                        <input placeholder="Search" type="text" class="browser-default search-field"
+                                        (keyup)='filterDatatable($event)' aria-label="Search box">
+                                    </li>
+                                    <li>
+                                      <!-- <div class="icon-button-demo m-l-10" [hidden]=!selection.hasValue()>
+                                        <button mat-mini-fab color="warn" (click)="removeSelectedRows()">
+                                          <mat-icon class="col-white">delete
+                                          </mat-icon>
+                                        </button>
+                                      </div> -->
+                                    </li>
+                                  </ul>
+                                </div>
+                                <div class="col-2" style="padding: 10px;">
+                                  <button mat-raised-button (click)="exportToExcel()" class="btn btn-success">{{'BUTTON.EXCEL-BTN' | translate}}
+                                    <i class="fas fa-file-excel"></i>
+                                  </button>                                
+                                </div>
+                                <div class="col-2">
+                                  <ul class="header-buttons">
+                                    <li>
+                                      <div class="icon-button-demo">
+                                        <button mat-mini-fab color="primary" (click)="addNewPackage()">
+                                          <mat-icon class="col-white">add</mat-icon>
+                                        </button>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div class="icon-button-demo">
+                                        <button mat-mini-fab color="primary" (click)="refresh()">
+                                          <mat-icon class="col-white">refresh
+                                          </mat-icon>
+                                        </button>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
+                            [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10">
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.LICENSE-TYPE' | translate}}" prop="license_data" [width]="130"></ngx-datatable-column>
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.PACKAGE-TYPE' | translate}}" prop="package_type" [width]="130"></ngx-datatable-column>
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.PACKAGE-OFFERS' | translate}}" prop="package_offers" [width]="130"></ngx-datatable-column>
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.FIANL-PACKAGE-PRICE' | translate}}" prop="final_package_price" [width]="200"></ngx-datatable-column>
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.PAYMENT-PHASE' | translate}}" prop="payment_phase" [width]="200"></ngx-datatable-column>
+                            <ngx-datatable-column name="{{'PACKAGE.LIST.GLOBAL-VIEW' | translate}}" prop="global_view" [width]="200"></ngx-datatable-column>
+                            
+                            <!-- <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">
+                                            </ngx-datatable-column> -->
+                            <!-- action buttons -->
+                            <ngx-datatable-column name="{{'PACKAGE.ACTION' | translate}}" sortable="false" [width]="120">
+                            <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                                <span>
+                                <button mat-icon-button color="accent" class="btn-tbl-edit" (click)='editPackage(row, rowIndex)'>
+                                    <mat-icon aria-label="Edit" class="col-white">edit
+                                    </mat-icon>
+                                </button>
+                                <button mat-icon-button color="accent" class="btn-tbl-delete" (click)='deletePackage(row,rowIndex,deleteRecord)'>
+                                    <mat-icon aria-label="Delete" class="col-white">delete
+                                    </mat-icon>
+                                </button>
+                                </span>
+                            </ng-template>
+                            </ngx-datatable-column>
+                        </ngx-datatable>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <ng-template #deleteRecord let-modal>
+          <div class="modal-header deleteRowModal">
+          <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+              <div class="modal-about">
+                  <div class="font-weight-bold p-t-10 font-17">
+                    {{'PACKAGE.DELETETITLE' | translate}}</div>
+              </div>
+              </div>
+          </h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true"><i class="material-icons">close</i></span>
+          </button>
+          </div>
+          <div class="modal-body">
+              <p>{{'BUTTON.CONFIRMATION' | translate}}</p>
+              <div class="modal-footer">
+              <div class="button-demo">
+                  <button mat-raised-button type="submit" color="primary" (click)="deletePackageDetails()">{{'BUTTON.DEL-BTN' | translate}}</button>
+                  <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+              </div>
+              </div>
+          </div>
+      </ng-template>

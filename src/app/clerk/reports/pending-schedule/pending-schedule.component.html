@@ -1,0 +1,67 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">{{'PENDING-SCHEDULE.TITLE' | translate}}</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+            <form class="m-4"  [formGroup]="pendingScheduleForm" >
+              <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>{{'PENDING-SCHEDULE.LIST.STATUS' | translate}}</mat-label>
+                        <mat-select formControlName="status" (selectionChange)="statusChange()">
+                          <mat-option *ngFor="let option of statusList" [value]="option.id">
+                              {{option.status}}
+                            </mat-option>
+                          </mat-select> 
+                      </mat-form-field>
+                  </div>
+                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;">
+                    <button mat-raised-button  color="primary" (click)="getPendingScheduleDetails()">{{'BUTTON.SEARCH-STUDENT' | translate}}</button>
+                  </div>
+                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;width: 10.666667% !important;">
+                    <button mat-raised-button (click)="exportToExcel()" class="btn btn-success">{{'BUTTON.EXCEL-BTN' | translate}}
+                      <i class="fas fa-file-excel"></i>
+                    </button>                                
+                  </div> 
+              </div>
+          </form>
+        <div class="body" >
+          <div class="container" *ngIf="data">
+            <div class="row">
+               <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
+               [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="5">
+                    <ngx-datatable-column [flexGrow]="2" name="{{'PENDING-SCHEDULE.LIST.STUDENT-NAME' | translate}}" prop="name" [width]="130"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'PENDING-SCHEDULE.LIST.NRIC' | translate}}" prop="nricNo" [width]="130"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'PENDING-SCHEDULE.LIST.MOBILE-NUMBER' | translate}}" prop="mobile_number" [width]="200"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'PENDING-SCHEDULE.LIST.PACKAGE' | translate}}" prop="package_name" [width]="200"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'PENDING-SCHEDULE.LIST.LICENSE' | translate}}" prop="license" [width]="200"></ngx-datatable-column>
+
+                  </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+

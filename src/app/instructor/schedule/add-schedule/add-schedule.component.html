@@ -1,0 +1,56 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="breadcrumb breadcrumb-style ">
+                  <li class="breadcrumb-item">
+                    <h4 class="page-title">{{'SCHEDULE.TITLE' | translate}}</h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-12 p-l-30">
+                      <div class="m-b-25">
+                        <!-- <button mat-raised-button color="primary" (click)="addNewEvent()">Add Event</button> -->
+                      </div>
+                      <!-- <p>My Calendars</p> -->
+                      <div class="filter-container">
+                        <ul>
+                          <li *ngFor="let filter of scheduleList">
+                            <mat-checkbox [checked]="filter.checked" [value]="filter.status" color="primary"
+                              (change)="changeCategory($event, filter)">
+                              {{filter.status}}
+                            </mat-checkbox>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-10 col-sm-12">
+                      <div class="panel-body">
+                        <full-calendar [options]='calendarOptions'>
+                        </full-calendar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      

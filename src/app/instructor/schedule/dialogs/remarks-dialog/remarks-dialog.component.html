@@ -1,0 +1,35 @@
+
+<div class="addContainer" >
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{'SCHEDULE.LIST.ADD-REMARKS' | translate}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button  aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content style="overflow-y: auto;overflow-x: hidden;">
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 table-responsive">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>{{'STUDENT-REGISTRATION.LIST.REMARKS' | translate}}</mat-label>
+              <textarea matInput [(ngModel)]="sch_remarks" >
+              </textarea> 
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 " >
+        <button style="float: right;" mat-raised-button type="submit" (click)="setRemarksInfo()" color="primary">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+

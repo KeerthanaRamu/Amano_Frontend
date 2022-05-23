@@ -1,0 +1,166 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="breadcrumb breadcrumb-style ">
+                  <li class="breadcrumb-item">
+                    <h4 class="page-title">{{'STUDENT-REGISTRATION.LISTTITLE' | translate}}</h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+                  <div class="mt-5">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="card">
+                        <div class="body">
+                          <div class="table-responsive">
+                            <div class="materialTableHeader">
+                              <div class="row">
+                                <div class="col-8">
+                                  <ul class="header-buttons-left ml-0">
+                                    <li class="dropdown">
+                                      <h2>
+                                        <strong>{{'STUDENT-REGISTRATION.LISTTITLE' | translate}}</strong></h2>
+                                    </li>
+                                    <li class="dropdown m-l-20">
+                                        <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                                        <input placeholder="Search" type="text" class="browser-default search-field"
+                                        (keyup)='filterDatatable($event)' aria-label="Search box">
+                                    </li>
+                                    <li>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <div class="col-4">
+                                  <ul class="header-buttons">
+                                    <li>
+                                      <!-- <div class="icon-button-demo">
+                                        <button mat-mini-fab color="primary" (click)="addNewStudent()">
+                                          <mat-icon class="col-white">add</mat-icon>
+                                        </button>
+                                      </div> -->
+                                    </li>
+                                    <li>
+                                      <div class="icon-button-demo">
+                                        <button mat-mini-fab color="primary" (click)="refresh()">
+                                          <mat-icon class="col-white">refresh
+                                          </mat-icon>
+                                        </button>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <ngx-datatable #table class='material' style="overflow-x: visible;"
+                            [rows]="data" [columns]="columns" [sortType]="'multi'"
+                            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5">
+                                <ngx-datatable-column name="Image" [flexGrow]="1"  sortable="false" prop="profile_img" >
+                                <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
+                                    <td class="table-img padding-0">
+                                    <img width="40" src="{{ value ? apiURL+'/'+value : 'assets/images/nologo.png' }}" />
+                                    </td>
+                                </ng-template>
+                                </ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}" prop="name" ></ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.LIST.ID' | translate}}" prop="id_number" ></ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.LIST.TRANSACTION' | translate}}" prop="enrollment_no" ></ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.LIST.STATUS' | translate}}" prop="current_status"></ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.LIST.NEXT-STATUS' | translate}}" prop="todisplay" ></ngx-datatable-column>
+                                <ngx-datatable-column [flexGrow]="1" name="{{'STUDENT-REGISTRATION.ACTIONS' | translate}}" sortable="false" [width]="120">
+                                <ng-template let-value="value" let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                                    <span>
+                                    <button mat-icon-button color="accent" class="btn-tbl-edit" (click)='viewStudent(row, rowIndex)'>
+                                        <mat-icon aria-label="View" class="col-white">visibility
+                                        </mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="accent" class="btn-tbl-edit" (click)='editStudent(row, rowIndex,updateStatus)'>
+                                        <mat-icon aria-label="Edit" class="col-white">edit
+                                        </mat-icon>
+                                    </button>
+                                    </span>
+                                </ng-template>
+                                </ngx-datatable-column>
+                            </ngx-datatable>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <ng-template #updateStatus let-modal>
+        <div class="modal-header deleteRowModal">
+        <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+            <div class="modal-about">
+                <div class="font-weight-bold p-t-10 font-17">
+                  {{'STUDENT-REGISTRATION.UPDATESTATUS' | translate}}</div>
+            </div>
+            </div>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form class="register-form" [formGroup]="updateStatusForm">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" *ngIf="showStatus">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>{{'STUDENT-REGISTRATION.LIST.STATUS' | translate}}</mat-label>
+                          <mat-select formControlName="status_id" (selectionChange)="checkScheduleCompleted()" required>
+                                  <mat-option *ngFor="let option of statusList" [value]="option.id">
+                                      {{option.status}}
+                                    </mat-option>
+                          </mat-select> 
+                      </mat-form-field>
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+                        <mat-label>Result</mat-label>
+                        <mat-radio-group formControlName="result">
+                            <mat-radio-button class="example-margin" value="Pass">
+                                Pass
+                            </mat-radio-button>
+                            <mat-radio-button class="example-margin" value="Fail" >
+                                Fail
+                            </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2"  *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Marks</mat-label>
+                          <input matInput formControlName="marks">
+                        </mat-form-field>
+                      </div>
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>{{'STUDENT-REGISTRATION.LIST.REMARKS' | translate}}</mat-label>
+                          <textarea matInput  formControlName="remarks">
+                          </textarea> 
+                      </mat-form-field>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" *ngIf="showNoStatus">
+                  <p>No Status Found!!</p>
+                </div>
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="button-demo">
+              <button mat-raised-button type="submit" color="primary" *ngIf="showStatus" [disabled]="!updateStatusForm.valid" (click)="updateStudentStatusInfo();modal.close()">{{'BUTTON.EDIT-BTN' | translate}}</button>
+              <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+          </div>
+        </div>
+    </ng-template>

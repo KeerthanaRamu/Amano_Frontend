@@ -1,0 +1,249 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>{{'RENEWAL-PROCESS.TITLE'| translate}}</h2>
+                        
+                    </div>
+                    <div class="body">
+                        <form class="m-4">
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <mat-label>{{'RENEWAL-PROCESS.LIST.NRIC-NUMBER' | translate}}</mat-label>
+                                        <input type="text" matInput [formControl]="nric_number" [matAutocomplete]="autoNric" >
+                                        <mat-autocomplete #autoNric="matAutocomplete" [displayWith]="displayFnNRICNUmber" (optionSelected)="selectedNricNumber($event)">
+                                        <mat-option *ngFor="let option of nricNumberList | async" [value]="option">
+                                            {{option.nric_number}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngFor="let validation of validation_msgs.nric_number">
+                                            <div *ngIf="nric_number.hasError(validation.type)">
+                                              {{validation.message}}
+                                            </div>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <mat-label>{{'RENEWAL-PROCESS.LIST.PASSPORT-NUMBER' | translate}}</mat-label>
+                                        <input type="text" matInput [formControl]="passport_number" [matAutocomplete]="autoPassport">
+                                        <mat-autocomplete #autoPassport="matAutocomplete" [displayWith]="displayFnPassportNumber" (optionSelected)="selectedPassportNumber($event)">
+                                        <mat-option *ngFor="let option of passportNumberList | async" [value]="option">
+                                            {{option.passport_number}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngFor="let validation of validation_msgs.passport_number">
+                                            <div *ngIf="passport_number.hasError(validation.type)">
+                                              {{validation.message}}
+                                            </div>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="showEnroll">
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <mat-label>{{'RENEWAL-PROCESS.LIST.TRANSACTION-NUMBER' | translate}}</mat-label>
+                                        <input type="text" matInput [formControl]="enrollment_no" [matAutocomplete]="autoTran">
+                                        <mat-autocomplete #autoTran="matAutocomplete" [displayWith]="displayFnTransactionNumber" (optionSelected)="getLicenseListPerEnroll($event)">
+                                        <mat-option *ngFor="let option of tranNumberList | async" [value]="option">
+                                            {{option.enrollment_no}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                                            <div *ngIf="enrollment_no.hasError(validation.type)">
+                                              {{validation.message}}
+                                            </div>
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="showLicenseType">
+                                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                        <mat-label>{{'SCHEDULE.LICENSE-CLASS' | translate}}</mat-label>
+                                        <input type="text" matInput [formControl]="license_type" [matAutocomplete]="autoTran">
+                                        <mat-autocomplete #autoTran="matAutocomplete" [displayWith]="displayFnLicenseClass" (optionSelected)="checkForRenewalProcess()">
+                                        <mat-option *ngFor="let option of licenseTypeList | async" [value]="option">
+                                            {{option.license_class}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                                            <div *ngIf="enrollment_no.hasError(validation.type)">
+                                              {{validation.message}}
+                                            </div>
+                                        </mat-error>
+                                    </mat-form-field>
+                                  </div>
+                                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" style="float: right;" *ngIf="license_type.value">
+                                        <button mat-raised-button (click)="showStudent(viewStudent)"  color="primary">{{'BUTTON.VIEW-STUDENT' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+                      
+                        <div *ngIf="showPayment">
+                            <form class="m-4" [formGroup]="licenseProcessForm">
+                                <div class="row">
+                                <p style="text-align: center;">{{'SCHEDULE.LIST.MAKE-PAYMENT-OF' | translate}} <b> ${{renewalDetails.renewalAmount}}</b> For <b>{{'RENEWAL-PROCESS.TITLE'| translate}}</b></p>
+                                <div class="panel-body" style="text-align: center;"> 
+                                    <button mat-raised-button color="primary" [type]="submit" 
+                                    (click)="showPaymentModal(showPay)">{{'BUTTON.PAYMENT' | translate}}</button>
+                                    </div>
+                                </div>
+                            </form>
+                          </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #showPay let-modal>
+    <div class="modal-header deleteRowModal">
+    <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+        <div class="modal-about">
+            <div class="font-weight-bold p-t-10 font-17">
+              {{'PENDING-REPORT.PAYMENT' | translate}}</div>
+        </div>
+        </div>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" >
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>{{'PENDING-REPORT.LIST.AMOUNT-TO-PAY' | translate}}</mat-label>
+              <input matInput [(ngModel)]="renewalDetails.renewalAmount" readonly>
+          </mat-form-field>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-top:30px;margin-bottom: 2.5rem !important;">
+              <mat-label>{{'PENDING-REPORT.LIST.PAYMENT-TYPE' | translate}}</mat-label>
+              <mat-radio-group [formControl]="payment_type">
+                  <mat-radio-button class="example-margin" value="Cash" (click)="changePaymentType()">
+                  {{'PENDING-REPORT.LIST.CASH' | translate}}
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin" value="Card" (click)="changePaymentType()">
+                      {{'PENDING-REPORT.LIST.CARD' | translate}}
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin" value="Cheque" (click)="changePaymentType()">
+                    {{'PENDING-REPORT.LIST.CHEQUE' | translate}}
+                </mat-radio-button>
+            </mat-radio-group>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>{{(payment_type.value == 'Cash' ? 'PENDING-REPORT.LIST.RECEIPT-NO' :(payment_type.value == 'Cheque' ? 'PENDING-REPORT.LIST.CHEQUE-NO' : 'PENDING-REPORT.LIST.TRANSACTION-NO')) | translate}}</mat-label>
+                <input matInput [formControl]="reference_no" [readonly]="disableReference" required>
+            </mat-form-field>
+            </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <div class="button-demo">
+              <button mat-raised-button type="submit" color="primary" [disabled]="!reference_no.valid" (click)="setRenewalDetails()">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+                <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+            </div>
+          </div>
+        </div>
+  </ng-template> 
+
+<ng-template #viewStudent let-modal>
+    <div class="modal-header deleteRowModal">
+    <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+        <div class="modal-about">
+            <div class="font-weight-bold p-t-10 font-17">
+                {{'PENDING-REPORT.SUBTITLE' | translate}}</div>
+        </div>
+        </div>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE1' | translate}}</h5>
+            <ul class="clearfix">
+                <li>
+                    <p><span class="font-weight-bold"> <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}:  </b></span><span>{{studentInfo.name}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}: </b></span><span>{{studentInfo.nric_number}}</span></p>
+                </li>
+                <li *ngIf="studentInfo.passport_number">
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}: </b></span><span>{{studentInfo.passport_number}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}: </b></span><span>{{studentInfo.date_of_birth | date:'dd/MM/yyyy'}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}: </b></span><span>{{studentInfo.gender}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}: </b></span><span>{{studentInfo.address_nric}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}: </b></span><span>{{studentInfo.city}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}: </b></span><span>{{studentInfo.state}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}: </b></span><span>{{studentInfo.email_id}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}: </b></span><span>{{studentInfo.mobile_number}}</span></p>
+                </li>
+            </ul>
+            <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE2' | translate}}</h5>
+            <ul class="clearfix">
+                <li>
+                    <p><span class="font-weight-bold"> <b>{{'PENDING-REPORT.LIST.LICENSE-CLASS' | translate}}:  </b></span><span [innerHTML]="LicenseData"></span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-NAME' | translate}}: </b></span><span>{{packInfo.package_name}}</span></p>
+                </li>
+                <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-DESCRIPTION' | translate}}: </b></span><span [innerHTML]="packInfo.package_description"></span></p>
+                </li>
+                <!-- <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-TYPE' | translate}}: </b></span><span>{{packInfo.package_type}}</span></p>
+                </li> -->
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-OFFERS' | translate}}: </b></span><span>{{packInfo.package_offers}}</span></p>
+                </li>
+                <!-- <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PAYMENT-PHASE' | translate}}: </b></span><span>{{licenseInfo.payment_phase}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.AMOUNT' | translate}}: </b></span><span>{{licenseInfo.final_package_price}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.FIRST-PHASE' | translate}}: </b></span><span>{{licenseInfo.first_phase_amount}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.SECOND-PHASE' | translate}}: </b></span><span>{{licenseInfo.second_phase_amount}}</span></p>
+                </li>
+                <li>
+                    <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.THIRD-PHASE' | translate}}: </b></span><span>{{licenseInfo.third_phase_amount}}</span></p>
+                </li> -->
+               
+            </ul>
+              
+            </div>
+        <div class="modal-footer">
+        <div class="button-demo">
+            <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+        </div>
+        </div>
+</ng-template>

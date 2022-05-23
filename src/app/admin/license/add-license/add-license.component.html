@@ -1,0 +1,189 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+        <div class="container-fluid">
+            <div class="block-header">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <ul class="breadcrumb breadcrumb-style ">
+                            <li class="breadcrumb-item">
+                                <h4 class="page-title">{{'LICENSE.TITLE' | translate}}</h4>
+                            </li>
+                           
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="header">
+                            <h2>{{'LICENSE.TITLE' | translate}}</h2>
+                            
+                        </div>
+                        <div class="body">
+                            <form class="m-4" [formGroup]="addLicenseForm">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                            <mat-label>{{'LICENSE.LIST.LICENSE-CLASS' | translate}}</mat-label>
+                                            <input matInput formControlName="license_class" required>
+                                            <mat-error *ngIf="addLicenseForm.get('license_class').hasError('required')">
+                                                    {{'LICENSE.LIST.LICENSE-CLASS' | translate}} is required
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                            <mat-label>{{'LICENSE.LIST.MIN-AGE' | translate}}</mat-label>
+                                            <input matInput formControlName="minimum_age" maxlength="2">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                        <mat-checkbox class="example-margin" formControlName="cdl_req">{{'LICENSE.LIST.CDL-REQ' | translate}}</mat-checkbox>     
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <mat-label>{{'LICENSE.LIST.LICENSE-ENGLISH' | translate}}*</mat-label>
+                                            <ckeditor [editor]="Editor" formControlName="license_desc_english"></ckeditor>
+                                            <mat-error *ngIf="addLicenseForm.get('license_desc_english').hasError('required')">
+                                                    {{'LICENSE.LIST.LICENSE-ENGLISH' | translate}} is required
+                                            </mat-error>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <mat-label>{{'LICENSE.LIST.LICENSE-MALAY' | translate}}*</mat-label>
+                                        <ckeditor [editor]="Editor" formControlName="license_desc_malay"></ckeditor>
+                                        <mat-error *ngIf="addLicenseForm.get('license_desc_malay').hasError('required')">
+                                                {{'LICENSE.LIST.LICENSE-MALAY' | translate}} is required
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <mat-label>{{'LICENSE.LIST.CRITERIA-ENGLISH' | translate}}*</mat-label>
+                                            <ckeditor [editor]="Editor" formControlName="criteria_english"></ckeditor>
+                                            <mat-error *ngIf="addLicenseForm.get('criteria_english').hasError('required')">
+                                                    {{'LICENSE.LIST.CRITERIA-ENGLISH' | translate}} is required
+                                            </mat-error>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <mat-label>{{'LICENSE.LIST.CRITERIA-MALAY' | translate}}*</mat-label>
+                                        <ckeditor [editor]="Editor" formControlName="criteria_malay"></ckeditor>
+                                        <mat-error *ngIf="addLicenseForm.get('criteria_malay').hasError('required')">
+                                                {{'LICENSE.LIST.CRITERIA-MALAY' | translate}} is required
+                                        </mat-error>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                                    <mat-label>{{'LICENSE.LIST.LICENSE-IMAGE' | translate}}</mat-label>
+                                                    <ngx-mat-file-input formControlName="license_image_name"  (change)="onFileChangeLicenseImage($event)" required>
+                                                    </ngx-mat-file-input>
+                                                    <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                                            <mat-label>{{'LICENSE.LIST.LICENSE-FLOW' | translate}}</mat-label>
+                                            <ngx-mat-file-input formControlName="license_flow_name"  (change)="onFileChangeLicenseFlow($event)" required>
+                                            </ngx-mat-file-input>
+                                            <mat-icon matSuffix>cloud_upload</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <mat-checkbox class="example-margin" formControlName="gdlPractical" >{{'LICENSE.LIST.GDL-PRACTICAL' | translate}}</mat-checkbox>     
+                                            </div>  
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <mat-checkbox class="example-margin" formControlName="psvPractical">{{'LICENSE.LIST.PSV-PRACTICAL' | translate}}</mat-checkbox>     
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <mat-checkbox class="example-margin" formControlName="upgradeLicense"  (change)="checkUpgrade($event)">{{'LICENSE.LIST.UPGRADE' | translate}}</mat-checkbox>     
+                                            </div>  
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                                <mat-checkbox class="example-margin" formControlName="advanceLicense"  (change)="checkAdvance($event)">{{'LICENSE.LIST.ADVANCE' | translate}}</mat-checkbox>     
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2"></div>
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <div class="row">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2" >
+                                                <mat-form-field class="example-full-width mb-3" appearance="outline" *ngIf="showUpgradeLicense">
+                                                    <mat-label>{{'LICENSE.LIST.UPGRADE-LICENSE' | translate}}</mat-label>
+                                                    <input type="text" matInput [formControl]="license_type" [matAutocomplete]="autoNric">
+                                                    <mat-autocomplete #autoNric="matAutocomplete" [displayWith]="displayFnLicense">
+                                                    <mat-option *ngFor="let option of licenseClassList | async" [value]="option">
+                                                        {{option.license_class}}
+                                                    </mat-option>
+                                                    </mat-autocomplete>
+                                                    <mat-error *ngFor="let validation of validation_msgs.license_type">
+                                                        <div *ngIf="license_type.hasError(validation.type)">
+                                                          {{validation.message}}
+                                                        </div>
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2" >
+                                                <mat-form-field class="example-full-width" *ngIf="showAdvanceLicense">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip
+                                                            *ngFor="let licenseDt of license_display"
+                                                            [selectable]="selectable"
+                                                            [removable]="removable"
+                                                            (removed)="remove(licenseDt)">
+                                                            {{licenseDt}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon> 
+                                                        </mat-chip> 
+                                                        <mat-label>{{'LICENSE.LIST.ADVANCE-LICENSE' | translate}}*</mat-label>
+                                                        <input type="text" matInput 
+                                                        #AdvancelicenceInput
+                                                        #autocompleteTrigger="matAutocompleteTrigger"
+                                                        [matChipInputFor]="chipList"
+                                                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                        (matChipInputTokenEnd)="add($event)"
+                                                        [formControl]="advance_license" [matAutocomplete]="autoLicense">
+                                                </mat-chip-list>
+                                                <mat-autocomplete #autoLicense="matAutocomplete" (optionSelected)="selectedListType($event)" autoActiveFirstOption>
+                                                <mat-option *ngFor="let option of advanceLicenseList | async" [value]="option">
+                                                        <mat-checkbox color="primary" style="padding: 0 12px;" [checked]="license_display.indexOf(option.license_class) >= 0"></mat-checkbox>
+                                                    {{option.license_class}}
+                                                </mat-option>
+                                                    </mat-autocomplete>
+                                                    <button mat-icon-button matSuffix style="width: 34px; height: 34px;" (click)="openAuto(autocompleteTrigger)"> <mat-icon style="width: 34px;">expand_more</mat-icon></button>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                        <button class="btn-space" [disabled]="!addLicenseForm.valid || disableSubmit" (click)="setLicenseDetails()" mat-raised-button
+                                            color="primary">{{'BUTTON.ADD-BTN' | translate}}</button>
+                                        <button type="button" mat-button (click)="goBack()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

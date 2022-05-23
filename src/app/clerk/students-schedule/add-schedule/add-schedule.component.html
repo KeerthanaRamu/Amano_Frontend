@@ -1,0 +1,378 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+        <div class="container-fluid">
+          <div class="block-header">
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="breadcrumb breadcrumb-style ">
+                  <li class="breadcrumb-item">
+                    <h4 class="page-title">{{'SCHEDULE.STUD-TITLE' | translate}}</h4>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>{{'SELECT-LICENSE.LIST.NRIC-NUMBER' | translate}}</mat-label>
+                            <input type="text" matInput 
+                            #nrictrigger="matAutocompleteTrigger"
+                            [formControl]="nric_number" 
+                            [matAutocomplete]="autoNric" >
+                            <div matSuffix style="display:flex">
+                              <button  
+                                (click)="clearInput($event,nric_number,'nric_number')"
+                                *ngIf=" nric_number?.value!==null && nric_number?.value!==''"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>clear</mat-icon>
+                              </button>
+                            
+                              <button
+                                (click)="openOrClosePanel($event,nrictrigger)"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                              </button>
+                              </div>
+                            <mat-autocomplete #autoNric="matAutocomplete" 
+                            [displayWith]="displayFnNRICNUmber" 
+                            (closed)="arrowIconSubject.next('arrow_drop_down')"
+                            (opened)="arrowIconSubject.next('arrow_drop_up')"
+                            (optionSelected)="selectedNricNumber($event);arrowIconSubject.next('arrow_drop_down')">
+                            <mat-option *ngFor="let option of nricNumberList | async" [value]="option">
+                                {{option.nric_number}}
+                            </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngFor="let validation of validation_msgs.nric_number">
+                                <div *ngIf="nric_number.hasError(validation.type)">
+                                  {{validation.message}}
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                          <mat-form-field class="example-full-width mb-3" appearance="outline">
+                              <mat-label>{{'SELECT-LICENSE.LIST.PASSPORT-NUMBER' | translate}}</mat-label>
+                              <input type="text" matInput #passtrigger="matAutocompleteTrigger"
+                              [formControl]="passport_number" 
+                              [matAutocomplete]="autoPassport">
+                              <div matSuffix style="display:flex">
+                                <button  
+                                  (click)="clearInput($event,passport_number,'passport_number')"
+                                  *ngIf=" passport_number?.value!==null && passport_number?.value!==''"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>clear</mat-icon>
+                                </button>
+                              
+                                <button
+                                  (click)="openOrClosePanel($event,passtrigger)"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                                </button>
+                                </div>
+                              <mat-autocomplete #autoPassport="matAutocomplete" 
+                              (closed)="arrowIconSubject.next('arrow_drop_down')"
+                              (opened)="arrowIconSubject.next('arrow_drop_up')"
+                              [displayWith]="displayFnPassportNumber" 
+                              (optionSelected)="selectedPassportNumber($event);arrowIconSubject.next('arrow_drop_down')">
+                              <mat-option *ngFor="let option of passportNumberList | async" [value]="option">
+                                  {{option.passport_number}}
+                              </mat-option>
+                              </mat-autocomplete>
+                              <mat-error *ngFor="let validation of validation_msgs.passport_number">
+                                  <div *ngIf="passport_number.hasError(validation.type)">
+                                    {{validation.message}}
+                                  </div>
+                              </mat-error>
+                          </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="(nric_number.valid || passport_number.valid) && tranNumberData.length > 0">
+                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>{{'SCHEDULE.TRANSACTION-NUMBER' | translate}}</mat-label>
+                            <input type="text" matInput 
+                            #enrolltrigger="matAutocompleteTrigger"
+                            [formControl]="enrollment_no" 
+                            [matAutocomplete]="autoTran">
+                            <div matSuffix style="display:flex">
+                              <button  
+                                (click)="clearInput($event,enrollment_no,'enrollment_no')"
+                                *ngIf=" enrollment_no?.value!==null && enrollment_no?.value!==''"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>clear</mat-icon>
+                              </button>
+                            
+                              <button
+                                (click)="openOrClosePanel($event,enrolltrigger)"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                              </button>
+                              </div>
+                            <mat-autocomplete #autoTran="matAutocomplete" 
+                            [displayWith]="displayFnTransactionNumber"
+                            (closed)="arrowIconSubject.next('arrow_drop_down')"
+                            (opened)="arrowIconSubject.next('arrow_drop_up')" 
+                            (optionSelected)="getLicenseListPerEnroll($event);arrowIconSubject.next('arrow_drop_down')">
+                            <mat-option *ngFor="let option of tranNumberList | async" [value]="option">
+                                {{option.enrollment_no}}
+                            </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                                <div *ngIf="enrollment_no.hasError(validation.type)">
+                                  {{validation.message}}
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="(nric_number.valid || passport_number.valid) && enrollment_no.valid && licenseTypeData.length > 0">
+                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>{{'SCHEDULE.LICENSE-CLASS' | translate}}</mat-label>
+                            <input type="text" matInput 
+                            #licensetrigger="matAutocompleteTrigger"
+                            [formControl]="license_type" 
+                            [matAutocomplete]="autoTran">
+                            <div matSuffix style="display:flex">
+                              <button  
+                                (click)="clearInput($event,license_type,'license_type')"
+                                *ngIf=" license_type?.value!==null && license_type?.value!==''"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>clear</mat-icon>
+                              </button>
+                            
+                              <button
+                                (click)="openOrClosePanel($event,licensetrigger)"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                              </button>
+                              </div>
+                            <mat-autocomplete #autoTran="matAutocomplete" 
+                            [displayWith]="displayFnLicenseClass" 
+                            (closed)="arrowIconSubject.next('arrow_drop_down')"
+                            (opened)="arrowIconSubject.next('arrow_drop_up')"
+                            (optionSelected)="checkPaymentInfo();arrowIconSubject.next('arrow_drop_down')">
+                            <mat-option *ngFor="let option of licenseTypeList | async" [value]="option">
+                                {{option.license_class}}
+                            </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                                <div *ngIf="enrollment_no.hasError(validation.type)">
+                                  {{validation.message}}
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" style="float: right;" *ngIf="LicenseData.length>0  && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                            <button mat-raised-button (click)="showStudent(viewStudent)"  color="primary">{{'BUTTON.VIEW-STUDENT' | translate}}</button>
+                      </div>
+                      <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" style="float: right;" *ngIf="currentStatus && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                          <span class="statusClass">{{currentStatus}}</span> 
+                      </div>
+                    </div>
+                   
+                    <div class="row" style="text-align: center;padding: 10px;" *ngIf="LicenseData.length>0 && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                    </div>
+                    <div  class="col-md-12 col-sm-12"  *ngIf="scheduleStatus == 'Pay'  && license_type.valid"> 
+                      <p style="text-align: center;">{{'SCHEDULE.LIST.MAKE-PAYMENT' | translate}} <b>{{upcomingStatus.status}}</b></p>
+                      <div class="panel-body" style="text-align: center;"> 
+                        <button mat-raised-button color="primary" 
+                        (click)="showPayment(showPay)">{{'BUTTON.PAYMENT' | translate}}</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12" *ngIf="calendarData.length > 0 && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                      <div class="panel-body">
+                        <full-calendar [options]='calendarOptions'>
+                        </full-calendar>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12" *ngIf="calendarData.length == 0 && scheduleStatus == 'Success'  && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                      <div class="panel-body" style="text-align: center;">
+                            <p>{{'SCHEDULE.LIST.NO-SCHEDULE' | translate}}</p>
+                      </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12" *ngIf="calendarData.length == 0 && scheduleStatus == 'Waiting'  && license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                      <div class="panel-body" style="text-align: center;">
+                            <p>Waiting For {{waitingLicense}} Status!!. Please Update the {{waitingLicense}} Status</p>
+                      </div>
+                    </div>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+       
+      <ng-template #showPay let-modal>
+        <div class="modal-header deleteRowModal">
+        <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+            <div class="modal-about">
+                <div class="font-weight-bold p-t-10 font-17">
+                  {{'PENDING-REPORT.PAYMENT' | translate}}</div>
+            </div>
+            </div>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <div class="row" >
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+                <mat-form-field class="example-full-width" appearance="outline">
+                  <mat-label>{{'PENDING-REPORT.LIST.AMOUNT-TO-PAY' | translate}}</mat-label>
+                  <input matInput [(ngModel)]="amountToBePaid" readonly>
+              </mat-form-field>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-top:30px;margin-bottom: 2.5rem !important;">
+                  <mat-label>{{'PENDING-REPORT.LIST.PAYMENT-TYPE' | translate}}</mat-label>
+                  <mat-radio-group [formControl]="payment_type">
+                      <mat-radio-button class="example-margin" value="Cash" (click)="changePaymentType()">
+                      {{'PENDING-REPORT.LIST.CASH' | translate}}
+                      </mat-radio-button>
+                      <mat-radio-button class="example-margin" value="Card" (click)="changePaymentType()">
+                          {{'PENDING-REPORT.LIST.CARD' | translate}}
+                      </mat-radio-button>
+                      <mat-radio-button class="example-margin" value="Cheque" (click)="changePaymentType()">
+                        {{'PENDING-REPORT.LIST.CHEQUE' | translate}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+                  <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>{{(payment_type.value == 'Cash' ? 'PENDING-REPORT.LIST.RECEIPT-NO' :(payment_type.value == 'Cheque' ? 'PENDING-REPORT.LIST.CHEQUE-NO' : 'PENDING-REPORT.LIST.TRANSACTION-NO')) | translate}}</mat-label>
+                    <input matInput [formControl]="reference_no" [readonly]="disableReference" required>
+                </mat-form-field>
+                </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <div class="button-demo">
+                  <button mat-raised-button type="submit" color="primary" [disabled]="!reference_no.valid" (click)="setPaymentDetails()">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+                    <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+                </div>
+              </div>
+            </div>
+      </ng-template> 
+
+      <ng-template #viewStudent let-modal>
+        <div class="modal-header deleteRowModal">
+        <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+            <div class="modal-about">
+                <div class="font-weight-bold p-t-10 font-17">
+                    {{'PENDING-REPORT.SUBTITLE' | translate}}</div>
+            </div>
+            </div>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE1' | translate}}</h5>
+                <ul class="clearfix">
+                    <li>
+                        <p><span class="font-weight-bold"> <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}:  </b></span><span>{{studentInfo.name}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}: </b></span><span>{{studentInfo.nric_number}}</span></p>
+                    </li>
+                    <li *ngIf="studentInfo.passport_number">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}: </b></span><span>{{studentInfo.passport_number}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}: </b></span><span>{{studentInfo.date_of_birth | date:'dd/MM/yyyy'}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}: </b></span><span>{{studentInfo.gender}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}: </b></span><span>{{studentInfo.address_nric}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}: </b></span><span>{{studentInfo.city}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}: </b></span><span>{{studentInfo.state}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}: </b></span><span>{{studentInfo.email_id}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}: </b></span><span>{{studentInfo.mobile_number}}</span></p>
+                    </li>
+                </ul>
+                <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE2' | translate}}</h5>
+                <ul class="clearfix">
+                    <li>
+                        <p><span class="font-weight-bold"> <b>{{'PENDING-REPORT.LIST.LICENSE-CLASS' | translate}}:  </b></span><span [innerHTML]="LicenseData"></span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-NAME' | translate}}: </b></span><span>{{licenseinfo[0].package_name}}</span></p>
+                    </li>
+                    <li>
+                      <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-DESCRIPTION' | translate}}: </b></span><span [innerHTML]="licenseinfo[0].package_description"></span></p>
+                    </li>
+                    <!-- <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-TYPE' | translate}}: </b></span><span>{{licenseinfo[0].package_type}}</span></p>
+                    </li> -->
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-OFFERS' | translate}}: </b></span><span>{{licenseinfo[0].package_offers}}</span></p>
+                    </li>
+                    <!-- <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PAYMENT-PHASE' | translate}}: </b></span><span>{{licenseInfo.payment_phase}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.AMOUNT' | translate}}: </b></span><span>{{licenseInfo.final_package_price}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.FIRST-PHASE' | translate}}: </b></span><span>{{licenseInfo.first_phase_amount}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.SECOND-PHASE' | translate}}: </b></span><span>{{licenseInfo.second_phase_amount}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.THIRD-PHASE' | translate}}: </b></span><span>{{licenseInfo.third_phase_amount}}</span></p>
+                    </li> -->
+                   
+                </ul>
+                  
+                </div>
+            <div class="modal-footer">
+            <div class="button-demo">
+                <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+            </div>
+            </div>
+    </ng-template>

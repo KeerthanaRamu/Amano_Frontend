@@ -1,0 +1,144 @@
+.progressSheet {                
+    max-width: 100%;
+    border: dashed #ccc;
+    padding: 15px;	
+    margin:auto;             
+}
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+        content: "";
+        display: table;
+        clear: both;
+}            
+
+    .labelleft {
+         float: left;
+    }
+    
+    .labelright {
+         float: right;
+    }
+    
+    .labelleft span {
+        /* width: 52px; */
+        padding: 10px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+    
+    .labelright span {
+        /* width: 52px; */
+        padding: 10px;
+        margin-right: 10px;
+        display: inline-block;
+    }
+                
+                
+                .invoice-box{
+                    max-width:1000px;
+                    margin:auto;
+                    padding:15px;
+                    border:1px solid #eee;
+                    box-shadow:0 0 10px rgba(0, 0, 0, .15);
+                    font-size:13px;
+                    line-height:20px;
+                    font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                    color:#555;
+                }
+                
+                .invoice-box table{
+                    width:100%;
+                    line-height:inherit;
+                    text-align:left;
+                    //  border-collapse: collapse
+                }
+                .invoice-box table th{
+                        padding:5px;
+                        vertical-align:top;		
+                        font-size:13px;
+                                   
+                    }
+                .invoice-box table td{
+                    padding:5px;
+                    vertical-align:top;
+                    font-size:13px;					
+                }
+                 /* .invoice-box table tr{
+                   border-bottom:2px solid #ccc;
+                }  */
+                 .total{
+                   border-top:2px solid #ccc;
+                } 
+           
+                @media only screen and (max-width: 600px) {
+                    .invoice-box table tr.top table td{
+                        width:100%;
+                        display:block;
+                        text-align:center;
+                        }
+                }
+                @media print {
+                   header {
+                     position: fixed;
+                     top: 0;
+                   }
+                   footer {
+                     position: fixed;
+                     bottom: 0;
+                   }
+               }
+			   
+			   .pdf-footer{
+					font-size:11px; 
+               }
+
+               #pageFooter {
+                   bottom: 0;
+                   left: 0;
+                   position: fixed;
+                   right: 0;
+               }
+               #pageHeader {
+                   top: 0;
+                   left: 0;
+                   position: fixed;
+                   right: 0;
+               }
+
+
+               .label
+                {
+                font-size: 14px;
+                float: left;
+                width: 10em;
+                margin-right: 1em;
+                }
+
+                .rowGroup{
+                    padding-left: 40px;   
+                    padding-top: 10px;
+                    line-height: 2rem;
+                }
+                .rowhead{
+                    padding-top: 10px;
+                    line-height: 2rem;
+                } 
+
+                .rowList{
+                    padding-left: 35px !important;
+                }
+
+
+                table, td, th {
+                    border: 1px solid black !important;
+                  }
+                   
+                  table {
+                    width: 100%;
+                    border-collapse: collapse;
+                  }

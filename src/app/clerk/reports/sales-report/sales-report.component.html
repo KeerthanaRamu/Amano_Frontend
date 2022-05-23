@@ -1,0 +1,79 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">{{'SALES-REPORT.TITLE' | translate}}</h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+              <div class="mt-5">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="card">
+                    <div class="body">
+                      <div class="table-responsive">
+                        <div class="materialTableHeader">
+                            <div class="row">
+                                <div class="col-8"></div>
+                                <div class="col-2" style="padding: 10px;">
+                                  <button mat-raised-button (click)="export()" class="btn btn-success">{{'BUTTON.EXCEL-BTN' | translate}}
+                                    <i class="fas fa-file-excel"></i>
+                                  </button>
+                                  <!-- <a csvLink [data]="data">Download</a> -->
+                                </div>
+                                <div class="col-2">
+                                  <ul class="header-buttons">
+                                    <li>
+                                      <div class="icon-button-demo">
+                                        <button mat-mini-fab color="primary" (click)="refresh()">
+                                          <mat-icon class="col-white">refresh
+                                          </mat-icon>
+                                        </button>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
+                        [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="5">
+                        <!-- user image -->
+                        <ngx-datatable-column name="Image" sortable="false" prop="profile_img" [width]="100">
+                        <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
+                            <td class="table-img padding-0">
+                            <img width="40" src="{{ value ? apiURL+'/'+value : 'assets/images/nologo.png' }}" />
+                            </td>
+                        </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="2" name="{{'SALES-REPORT.LIST.STUDENT-NAME' | translate}}" prop="name" [width]="130"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="2" name="{{'SALES-REPORT.LIST.NRIC' | translate}}" prop="nric_number" [width]="130"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="2" name="{{'SALES-REPORT.LIST.PASSPORT' | translate}}" prop="passport_number" [width]="200"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="2" name="{{'SALES-REPORT.LIST.TRAN-NO' | translate}}" prop="enrollment_no" [width]="200"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="2" name="{{'SALES-REPORT.LIST.PACKAGE' | translate}}" prop="package_english" [width]="200"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="1" name="{{'SALES-REPORT.LIST.PAYMENT-PHASE' | translate}}" prop="english" [width]="200"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="1" name="{{'SALES-REPORT.LIST.LICENSE' | translate}}" prop="license_class" [width]="200"></ngx-datatable-column>
+                        <ngx-datatable-column [flexGrow]="1" name="{{'SALES-REPORT.LIST.AMOUNT-PAID' | translate}}" prop="payment_amount" [width]="200"></ngx-datatable-column>
+                    </ngx-datatable>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,6 @@
+.alignRow{
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}

@@ -1,0 +1,284 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">{{'TIME-MASTER.TITLE' | translate}}</h4>
+                        </li>
+                        <!-- <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/admin/dashboard/main">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a href="#" onClick="return false;">Students</a>
+                        </li>
+                        <li class="breadcrumb-item active">Registration</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                        <strong>{{'TIME-MASTER.TITLE' | translate}}</strong>
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <form [formGroup]="addtimeMasterForm">
+                            <div class="row">
+                                <div class="col-6"> <label>Working Hours</label></div>
+                                <div class="col-6"><label>Rest Hours</label></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <input matInput
+                                               formControlName="working_hour_from"
+                                               name="selected_time_A"
+                                               format="24"
+                                               [ngxMatTimepicker]="pickerA"
+                                               placeholder="From" [disabled]="!showTime"/>
+                                        <mat-icon matSuffix *ngIf="showTime"
+                                                  (click)="pickerA.open()" >
+                                            watch_later
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <ngx-mat-timepicker color="accent"
+                                        #pickerA></ngx-mat-timepicker>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <input matInput
+                                               formControlName="working_hour_to"
+                                               name="selected_time_B"
+                                               format="24"
+                                               [ngxMatTimepicker]="pickerB"
+                                               placeholder="To" [disabled]="!showTime"/>
+                                        <mat-icon matSuffix *ngIf="showTime"
+                                                  (click)="pickerB.open()">
+                                            watch_later
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <ngx-mat-timepicker color="accent"
+                                        #pickerB></ngx-mat-timepicker>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <input matInput
+                                                formControlName="rest_hour_from"
+                                                name="selected_time_A"
+                                                format="24"
+                                                [ngxMatTimepicker]="pickerC"
+                                                placeholder="From" [disabled]="!showTime"/>
+                                        <mat-icon matSuffix *ngIf="showTime"
+                                                    (click)="pickerC.open()">
+                                            watch_later
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <ngx-mat-timepicker color="accent"
+                                        #pickerC></ngx-mat-timepicker>
+                                </div>
+                                <div class="col-3"> 
+                                    <mat-form-field>
+                                        <input matInput
+                                                formControlName="rest_hour_to"
+                                                name="selected_time_B"
+                                                format="24"
+                                                [ngxMatTimepicker]="pickerD"
+                                                placeholder="To" [disabled]="!showTime"/>
+                                        <mat-icon matSuffix *ngIf="showTime"
+                                                    (click)="pickerD.open()">
+                                            watch_later
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <ngx-mat-timepicker color="accent"
+                                        #pickerD></ngx-mat-timepicker>
+                                </div>
+                            </div>
+                            <div class="row"></div>
+                            <div class="row">
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <mat-label>Cut-Over Time</mat-label>
+                                        <input matInput
+                                               formControlName="cut_over_time"
+                                               name="selected_time_A"
+                                               format="24"
+                                               [ngxMatTimepicker]="pickerE"
+                                               placeholder="" />
+                                        <mat-icon matSuffix
+                                                  (click)="pickerE.open()">
+                                            watch_later
+                                        </mat-icon>
+                                    </mat-form-field>
+                                    <ngx-mat-timepicker color="accent"
+                                        #pickerE></ngx-mat-timepicker>
+                                </div>
+                                <div class="col-3">
+                                    <mat-form-field>
+                                        <mat-label>No. Of Session per week</mat-label>
+                                        <input matInput
+                                               formControlName="no_of_session"
+                                               />
+                                    </mat-form-field>
+
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <button *ngIf="showTime" class="btn-space" [disabled]="!addtimeMasterForm.valid" mat-raised-button
+                                   (click)="setTimeDetails()" color="primary">{{'BUTTON.ADD-BTN' | translate}}</button>
+                                   <button *ngIf="!showTime" class="btn-space" [disabled]="!addtimeMasterForm.valid" mat-raised-button
+                                   (click)="updateTimeDetails()" color="primary">{{'BUTTON.EDIT-BTN' | translate}}</button>
+                                <button type="button" mat-button>{{'BUTTON.CANCEL-BTN' | translate}}</button>
+                            </div>
+                        </div>
+                    </div>
+                        
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<ng-template #showStudent let-modal>
+        <div class="modal-header deleteRowModal">
+        <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+            <div class="modal-about">
+                <div class="font-weight-bold p-t-10 font-17">
+                    {{'STUDENT-REGISTRATION.CONFIRMTITLE' | translate}}</div>
+            </div>
+            </div>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE1' | translate}}</h5>
+                <ul class="clearfix">
+                    <li>
+                        <p><span class="font-weight-bold"> <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}:  </b></span><span>{{confirmPersonalData.name}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.IC-TYPE' | translate}}: </b></span><span>{{nricType.value[translateVal]}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}: </b></span><span>{{confirmPersonalData.nric_number}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.passport_number">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}: </b></span><span>{{confirmPersonalData.passport_number}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}: </b></span><span>{{confirmPersonalData.date_of_birth | date:'dd/MM/yyyy'}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}: </b></span><span>{{confirmPersonalData.gender}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PLACEBIRTH' | translate}}: </b></span><span>{{placeBirth.value[translateVal]}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NATIONALITY' | translate}}: </b></span><span>{{nationality.value.country_name}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}: </b></span><span>{{confirmPersonalData.ic_address}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.address1">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.ADDRESS1' | translate}}: </b></span><span>{{confirmPersonalData.address1}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.address2">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.ADDRESS2' | translate}}: </b></span><span>{{confirmPersonalData.address2}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.POSTAL-CODE' | translate}}: </b></span><span>{{postalCode.value.postal_code}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}: </b></span><span>{{confirmPersonalData.city}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}: </b></span><span>{{confirmPersonalData.state}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}: </b></span><span>{{confirmPersonalData.email_address}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}: </b></span><span>{{confirmPersonalData.mobile_number}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.RACE' | translate}}: </b></span> <span>{{race.value[translateVal]}}</span></p>
+                    </li>
+                    <li  *ngIf="confirmPersonalData.other_race">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.OTHERRACE' | translate}}: </b></span><span>{{confirmPersonalData.other_race}}</span></p>
+                    </li>
+                </ul>
+                <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE2' | translate}}</h5>
+                    <ul class="clearfix">
+                        <li *ngIf="preference.value[translateVal]">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.PREFERENCE' | translate}}: </b></span><span>{{preference.value[translateVal]}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.emergency_name">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.EMERGENCY-NAME' | translate}}: </b></span><span>{{confirmPreferenceData.emergency_name}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.emergency_number">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMERGENCY-NUMBER' | translate}}: </b></span><span>{{confirmPreferenceData.emergency_number}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.user_name">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.USERNAME' | translate}}: </b></span><span>{{confirmPreferenceData.user_name}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.password">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSWORD' | translate}}: </b></span><span>{{confirmPreferenceData.password}}</span></p>
+                        </li>
+                        <li *ngIf="existing_license.value[translateVal]">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE' | translate}}: </b></span><span>{{existing_license.value[translateVal]}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.expiry_date">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXPIRYDATE' | translate}}: </b></span><span>{{confirmPreferenceData.expiry_date | date:'dd/MM/yyyy'}}</span></p>
+                        </li>
+                    </ul>
+                    <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE3' | translate}}</h5>
+                    <ul class="clearfix">
+                        <li *ngIf="confirmDocumentData.photo_name._fileNames">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.PHOTO' | translate}}: </b></span><span>{{confirmDocumentData.photo_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.nric_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.NRIC-FRONT' | translate}}: </b></span><span>{{confirmDocumentData.nric_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.nric_rear_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC-REAR' | translate}}: </b></span><span>{{confirmDocumentData.nric_rear_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.passport_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT-FRONT' | translate}}:</b> </span><span>{{confirmDocumentData.passport_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.work_permit_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.WORK-PERMIT' | translate}}: </b></span><span>{{confirmDocumentData.work_permit_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.existing_license_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-FRONT' | translate}}: </b></span><span>{{confirmDocumentData.existing_license_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="confirmDocumentData.existing_license_rear_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-REAR' | translate}}: </b></span><span>{{confirmDocumentData.existing_license_rear_name._fileNames}}</span></p>
+                        </li>
+                    </ul>
+                </div>
+            <div class="modal-footer">
+            <div class="button-demo">
+                <button mat-raised-button type="submit" color="primary" (click)="setConfirmStudentDetails()">{{'BUTTON.COFIRM-BTN' | translate}}</button>
+                <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+            </div>
+            </div>
+    </ng-template>

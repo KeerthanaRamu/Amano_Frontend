@@ -1,0 +1,129 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <ul class="breadcrumb breadcrumb-style ">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">{{'SELECT-PACKAGE.TITLE' | translate}}</h4>
+              </li>
+             
+            </ul>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <button mat-raised-button  color="primary" style="float: right;" (click)="backToLicense()">{{'BUTTON.BACK-BTN' | translate}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="card">
+            <div class="header">
+              <h2>{{'SELECT-PACKAGE.TITLE' | translate}}</h2>
+            </div>
+            <div class="body">
+              <div class="demo">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let packDt of packageInfo">
+                      <div [ngClass]="packDt.package_offers == 'Affordable' ? 'pricingTable blueColor' : 'pricingTable greenColor'" style="cursor: pointer;" >
+                        <div class="pricingTable-header" (click)="getLicenseFlowImage(packDt)">
+                          <i class="material-icons">spa</i>
+                          <div class="price-value"> ${{packDt.final_package_price}}
+                            <span class="month"><del>${{packDt.package_price}}</del> ({{packDt.promo_discount}}%) </span>
+                          </div>
+                        </div>
+                        <h3 class="heading">{{packDt.package_offers}}</h3>
+                        <div class="pricing-content" (click)="getLicenseFlowImage(packDt)">
+                            <ul>
+                              <li>
+                                <h5>{{packDt.package_title}}</h5>
+                                <b>{{packDt[translateVal]}}</b>
+                                <h6 style="margin-top: 10px;">{{'SELECT-LICENSE.LIST.LICENSE' | translate}} : {{packDt.licenseClasses}}</h6>
+                              </li>
+                                
+                            </ul>
+                            
+                            <div [innerHtml]="packDt.package_desc">
+                            </div>
+                            <div [innerHtml]="packDt.package_phase_desc">
+                            </div>
+                        </div>
+                        <div class="pricingTable-signup">
+                          <a (click)="setCustomerPackageDetails(packDt,showPay)">{{'BUTTON.BUY-BTN' | translate}}</a>
+                        </div>
+                        <div style="margin-top: 30px;">
+                            <a style="color: #0d6efd;text-decoration: underline;" (click)="viewPackageImage(packDt)">{{'VIEW-PACKAGE.VIEWIMAGE' | translate}}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="CCDataForm"></div>
+  </section>
+
+  <ng-template #showPay let-modal>
+    <div class="modal-header deleteRowModal">
+    <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+        <div class="modal-about">
+            <div class="font-weight-bold p-t-10 font-17">
+              {{'PENDING-REPORT.PAYMENT' | translate}}</div>
+        </div>
+        </div>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="row" >
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>{{'PENDING-REPORT.LIST.AMOUNT-TO-PAY' | translate}}</mat-label>
+              <input matInput [(ngModel)]="payamount" readonly>
+          </mat-form-field>
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-top:30px;margin-bottom: 2.5rem !important;">
+              <mat-label>{{'PENDING-REPORT.LIST.PAYMENT-TYPE' | translate}}</mat-label>
+              <mat-radio-group [formControl]="payment_type">
+                  <mat-radio-button class="example-margin" value="Cash" (click)="changePaymentType()">
+                  {{'PENDING-REPORT.LIST.CASH' | translate}}
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin" value="Card" (click)="changePaymentType()">
+                      {{'PENDING-REPORT.LIST.CARD' | translate}}
+                  </mat-radio-button>
+                  <mat-radio-button class="example-margin" value="Cheque" (click)="changePaymentType()">
+                    {{'PENDING-REPORT.LIST.CHEQUE' | translate}}
+                </mat-radio-button>
+            </mat-radio-group>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" style="margin-bottom: 2.5rem !important;">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>{{(payment_type.value == 'Cash' ? 'PENDING-REPORT.LIST.RECEIPT-NO' :(payment_type.value == 'Cheque' ? 'PENDING-REPORT.LIST.CHEQUE-NO' : 'PENDING-REPORT.LIST.TRANSACTION-NO')) | translate}}</mat-label>
+                <input matInput [formControl]="reference_no" [readonly]="disableReference" required>
+            </mat-form-field>
+            </div>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <div class="button-demo">
+              <button mat-raised-button type="submit" color="primary" [disabled]="!reference_no.valid" (click)="setPaymentDetails()">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+                <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+            </div>
+          </div>
+        </div>
+  </ng-template>

@@ -1,0 +1,431 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style ">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">{{'TIMELINE.TITLE' | translate}}</h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="card">
+              <form class="m-4">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>{{'TIMELINE.LIST.NRIC-NUMBER' | translate}}</mat-label>
+                            <input type="text" matInput [formControl]="nric_number" 
+                            [matAutocomplete]="autoNric" #nrictrigger="matAutocompleteTrigger">
+                            <div matSuffix style="display:flex">
+                                <button  
+                                  (click)="clearInput($event,nric_number,'nric_number')"
+                                  *ngIf=" nric_number?.value!==null && nric_number?.value!==''"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>clear</mat-icon>
+                                </button>
+                                <button
+                                  (click)="openOrClosePanel($event,nrictrigger)"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                                </button>
+                            </div>
+                            <mat-autocomplete #autoNric="matAutocomplete" 
+                            [displayWith]="displayFnNRICNUmber" 
+                            (optionSelected)="selectedNricNumber($event);arrowIconSubject.next('arrow_drop_down')"
+                            (closed)="arrowIconSubject.next('arrow_drop_down')"
+                            (opened)="arrowIconSubject.next('arrow_drop_up')">
+                            <mat-option *ngFor="let option of nricNumberList | async" [value]="option">
+                                {{option.nric_number}}
+                            </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngFor="let validation of validation_msgs.nric_number">
+                                <div *ngIf="nric_number.hasError(validation.type)">
+                                  {{validation.message}}
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                        <mat-form-field class="example-full-width mb-3" appearance="outline">
+                            <mat-label>{{'TIMELINE.LIST.PASSPORT-NUMBER' | translate}}</mat-label>
+                            <input type="text" matInput [formControl]="passport_number" 
+                            [matAutocomplete]="autoPassport" #passtrigger="matAutocompleteTrigger">
+                            <div matSuffix style="display:flex">
+                                <button  
+                                  (click)="clearInput($event,passport_number,'passport_number')"
+                                  *ngIf=" passport_number?.value!==null && passport_number?.value!==''"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>clear</mat-icon>
+                                </button>
+                                <button
+                                  (click)="openOrClosePanel($event,passtrigger)"
+                                  aria-label="Clear"
+                                  mat-icon-button
+                                  type="button"
+                                >
+                                  <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                                </button>
+                            </div>
+                            <mat-autocomplete #autoPassport="matAutocomplete" 
+                            [displayWith]="displayFnPassportNumber" 
+                            (optionSelected)="selectedPassportNumber($event);arrowIconSubject.next('arrow_drop_down')"
+                            (closed)="arrowIconSubject.next('arrow_drop_down')"
+                            (opened)="arrowIconSubject.next('arrow_drop_up')">
+                            <mat-option *ngFor="let option of passportNumberList | async" [value]="option">
+                                {{option.passport_number}}
+                            </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngFor="let validation of validation_msgs.passport_number">
+                                <div *ngIf="passport_number.hasError(validation.type)">
+                                  {{validation.message}}
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2"  *ngIf="(nric_number.valid || passport_number.valid) && tranNumberData.length > 0">
+                      <mat-form-field class="example-full-width mb-3" appearance="outline">
+                          <mat-label>{{'TIMELINE.LIST.TRANSACTION-NUMBER' | translate}}</mat-label>
+                          <input type="text" matInput [formControl]="enrollment_no" 
+                          [matAutocomplete]="autoTran" #enrolltrigger="matAutocompleteTrigger"
+                          >
+                          <div matSuffix style="display:flex">
+                              <button  
+                                (click)="clearInput($event,enrollment_no,'enrollment_no')"
+                                *ngIf=" enrollment_no?.value!==null && enrollment_no?.value!==''"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                                <mat-icon>clear</mat-icon>
+                              </button>
+                              <button
+                                (click)="openOrClosePanel($event,enrolltrigger)"
+                                aria-label="Clear"
+                                mat-icon-button
+                                type="button"
+                              >
+                              <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                              </button>
+                            </div>
+                          <mat-autocomplete #autoTran="matAutocomplete" 
+                          [displayWith]="displayFnTransactionNumber" 
+                          (optionSelected)="getLicenseListPerEnroll($event);arrowIconSubject.next('arrow_drop_down')"
+                          (closed)="arrowIconSubject.next('arrow_drop_down')"
+                          (opened)="arrowIconSubject.next('arrow_drop_up')">
+                          <mat-option *ngFor="let option of tranNumberList | async" [value]="option">
+                              {{option.enrollment_no}}
+                          </mat-option>
+                          </mat-autocomplete>
+                          <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                              <div *ngIf="enrollment_no.hasError(validation.type)">
+                                {{validation.message}}
+                              </div>
+                          </mat-error>
+                      </mat-form-field>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="(nric_number.valid || passport_number.valid) && enrollment_no.valid && licenseTypeData.length > 0">
+                    <mat-form-field class="example-full-width mb-3" appearance="outline">
+                        <mat-label>{{'SCHEDULE.LICENSE-CLASS' | translate}}</mat-label>
+                        <input type="text" matInput [formControl]="license_type" 
+                        [matAutocomplete]="autoTran" #licensetrigger="matAutocompleteTrigger">
+                        <div matSuffix style="display:flex">
+                            <button  
+                              (click)="clearInput($event,license_type,'license_type')"
+                              *ngIf=" license_type?.value!==null && license_type?.value!==''"
+                              aria-label="Clear"
+                              mat-icon-button
+                              type="button"
+                            >
+                              <mat-icon>clear</mat-icon>
+                            </button>
+                        
+                            <button
+                              (click)="openOrClosePanel($event,licensetrigger)"
+                              aria-label="Clear"
+                              mat-icon-button
+                              type="button"
+                            >
+                              <mat-icon>{{arrowIconSubject.getValue()}}</mat-icon>
+                            </button>
+                          </div>
+                        <mat-autocomplete #autoTran="matAutocomplete" 
+                        [displayWith]="displayFnLicenseClass" 
+                        (optionSelected)="checkTimelineForStudent($event);arrowIconSubject.next('arrow_drop_down')"
+                        (closed)="arrowIconSubject.next('arrow_drop_down')"
+                        (opened)="arrowIconSubject.next('arrow_drop_up')">
+                        <mat-option *ngFor="let option of licenseTypeList | async" [value]="option">
+                            {{option.license_class}}
+                        </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngFor="let validation of validation_msgs.enrollment_no">
+                            <div *ngIf="enrollment_no.hasError(validation.type)">
+                              {{validation.message}}
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" style="float: right;" *ngIf="license_type.valid && enrollment_no.valid && (nric_number.valid || passport_number.valid)">
+                        <button mat-raised-button (click)="showStudent(viewStudent)"  color="primary">{{'BUTTON.VIEW-STUDENT' | translate}}</button>
+                  </div>
+                </div>
+               
+            </form>
+          <div class="body" *ngIf="statusDone">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-10">
+                  <ul class="left-timeline">
+                    <li *ngFor="let statusdt of statusList">
+                      <div >
+                        <time class="left-time" datetime="2017-11-04T18:30">
+                          <!-- <span class="hidden" *ngIf="statusdt.scheduled_date">{{statusdt.scheduled_date | date: 'dd-MM-YYYY'}}</span> -->
+                          <span class="hidden" *ngIf="statusdt.completed_date">{{statusdt.completed_date | date: 'dd-MM-YYYY'}}</span>
+                        </time> 
+                        <!-- <div class="left-icon" [ngClass]="statusdt.BColor ? 'timeline-green' : 'timeline-orange'"><mat-icon style="line-height: 1.7 !important;color: white;">done</mat-icon></div>
+                        <div *ngIf="statusdt.id != 18 &&  statusdt.id != 26 && statusdt.id != 34" [ngClass]="statusdt.BColor ? 'progline-green' : 'progline-orange'"></div>
+                        <div *ngIf="statusdt.showStatus" class="left-label empty" [ngClass]="statusdt.BColor ? 'bck-color' : ''">
+                          <span>{{statusdt.status}} 
+                            <mat-icon *ngIf="statusdt.showReceipt" style="float: right;font-size: 30px;cursor: pointer;" (click)="showPaymentReceipt(statusdt)">receipt</mat-icon>                          </span> -->
+                            <div *ngIf="statusdt.showStatus == true" class="left-icon" [ngClass]="statusdt.BColor ? 'timeline-green' : 'timeline-orange'">
+                              <mat-icon style="line-height: 1.7 !important;color: white;">done</mat-icon>
+                            </div>
+                            <div *ngIf="statusdt.showStatus == true" [ngClass]="statusdt.BColor ? 'progline-green' : 'progline-orange'">
+                            </div>
+                            <div *ngIf="statusdt.showStatus" class="left-label empty" [ngClass]="statusdt.BColor ? 'bck-color' : ''">
+                              <span>{{statusdt.status}} 
+                                  
+                                  <mat-icon matTooltip="View Receipt" *ngIf="statusdt.showReceipt" style="float: right;font-size: 30px;cursor: pointer;"  (click)="showPaymentReceipt(statusdt)">receipt</mat-icon> 
+                                  <mat-icon matTooltip="Update Status" *ngIf="statusdt.BColor != 'timeline-green' && statusdt.owner_id == 2" style="float: right;font-size: 30px;cursor: pointer;" (click)="updateStatus(statusdt.id,deleteRecord)">edit</mat-icon>
+                                  <mat-icon matTooltip="View Instructor" *ngIf="statusdt.owner_id == 5 || statusdt.owner_id == 6" style="float: right;font-size: 33px;cursor: pointer;padding-right: 35px;" (click)="viewInstructorDetails(statusdt.id,instructorData)">supervised_user_circle</mat-icon>
+                                  <span style="float: right;" *ngIf="statusdt.id == 2"> Package Name - <b> {{package_name}}</b>  <mat-icon *ngIf="licenseinfo[0].status_id==2" style="padding-left: 10px;cursor: pointer;" matTooltip="Update Package" (click)="editPackageDetails()">edit</mat-icon></span>
+                                  <span style="float: right;" *ngIf="statusdt.id == 7 && licenseinfo[0].LDL_license_no != null">  License No - <b> {{licenseinfo[0].LDL_license_no}} </b>&nbsp;&nbsp;  Expiry Date - <b> {{licenseinfo[0].LDL_expiry_date | date : 'dd-MM-yyyy'}}</b></span>
+                                  <span style="float: right;" *ngIf="statusdt.id == 15 && licenseinfo[0].PDL_license_no != null"> License No - <b> {{licenseinfo[0].PDL_license_no}} </b>&nbsp;&nbsp;  Expiry Date - <b> {{licenseinfo[0].PDL_expiry_date | date : 'dd-MM-yyyy'}} </b>&nbsp;&nbsp;Rating - <b>{{statusdt.rating}}/5</b></span>
+                                  <span style="float: right;" *ngIf="statusdt.id == 26 && licenseinfo[0].GDL_license_no != null"> License No - <b> {{licenseinfo[0].GDL_license_no}} </b>&nbsp;&nbsp;  Expiry Date - <b> {{licenseinfo[0].GDL_expiry_date | date : 'dd-MM-yyyy'}}</b></span>
+                                  <span style="float: right;" *ngIf="statusdt.id == 34 && licenseinfo[0].PSV_license_no != null"> License No - <b> {{licenseinfo[0].PSV_license_no}} </b>&nbsp;&nbsp;  Expiry Date - <b> {{licenseinfo[0].PSV_expiry_date | date : 'dd-MM-yyyy'}}</b></span>
+                                  <span style="float: right;" *ngIf="(statusdt.test_flag == 'T' || statusdt.test_flag == 'R') && statusdt.marks != null"> Marks - <b> {{statusdt.marks}}</b></span>
+                                </span>
+                          
+                            <div [ngClass]="statusdt.BColor ? 'bck-right-color' : 'bck-orange-color'"></div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <ng-template #deleteRecord let-modal>
+    <div class="modal-header deleteRowModal">
+    <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+        <div class="modal-about">
+            <div class="font-weight-bold p-t-10 font-17">
+               Update Status</div>
+        </div>
+        </div>
+    </h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true"><i class="material-icons">close</i></span>
+    </button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="statusUpdateForm">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Status</mat-label>
+            <input matInput formControlName="status"  readonly>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+          <mat-label>Result</mat-label>
+          <mat-radio-group formControlName="result">
+              <mat-radio-button class="example-margin" value="Pass">
+                  Pass
+              </mat-radio-button>
+              <mat-radio-button class="example-margin" value="Fail" >
+                  Fail
+              </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2"  *ngIf="statusDetail.test_flag == 'T' || statusDetail.test_flag == 'R'">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Marks</mat-label>
+            <input matInput formControlName="marks">
+          </mat-form-field>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput formControlName="remarks"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2" *ngIf="statusDetail.id == 15">
+            <mat-label>Rating</mat-label>
+            <div>
+              <ngx-star-rating formControlName="rating" [id]="'rating'"></ngx-star-rating>
+            </div>
+        </div>
+      
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="button-demo">
+          <button mat-raised-button type="submit" color="primary" (click)="updateStudentStatusInfo();modal.close()">{{'BUTTON.EDIT-BTN' | translate}}</button>
+          <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+      </div>
+    </div>
+</ng-template>
+<ng-template #viewStudent let-modal>
+  <div class="modal-header deleteRowModal">
+  <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+      <div class="modal-about">
+          <div class="font-weight-bold p-t-10 font-17">
+              {{'PENDING-REPORT.SUBTITLE' | translate}}</div>
+      </div>
+      </div>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true"><i class="material-icons">close</i></span>
+  </button>
+  </div>
+  <div class="modal-body">
+      <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE1' | translate}}</h5>
+          <ul class="clearfix">
+              <li>
+                  <p><span class="font-weight-bold"> <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}:  </b></span><span>{{studentInfo.name}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}: </b></span><span>{{studentInfo.nric_number}}</span></p>
+              </li>
+              <li *ngIf="studentInfo.passport_number">
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}: </b></span><span>{{studentInfo.passport_number}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}: </b></span><span>{{studentInfo.date_of_birth | date:'dd/MM/yyyy'}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}: </b></span><span>{{studentInfo.gender}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}: </b></span><span>{{studentInfo.address_nric}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}: </b></span><span>{{studentInfo.city}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}: </b></span><span>{{studentInfo.state}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}: </b></span><span>{{studentInfo.email_id}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}: </b></span><span>{{studentInfo.mobile_number}}</span></p>
+              </li>
+          </ul>
+          <h5 style="text-align:center">{{'PENDING-REPORT.SUBTITLE2' | translate}}</h5>
+          <ul class="clearfix">
+              <li>
+                  <p><span class="font-weight-bold"> <b>{{'PENDING-REPORT.LIST.LICENSE-CLASS' | translate}}:  </b></span><span [innerHTML]="LicenseData"></span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-NAME' | translate}}: </b></span><span>{{packInfo.package_name}}</span></p>
+              </li>
+              <li>
+                <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-DESCRIPTION' | translate}}: </b></span><span [innerHTML]="packInfo.package_description"></span></p>
+              </li>
+              <!-- <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-TYPE' | translate}}: </b></span><span>{{packInfo.package_type}}</span></p>
+              </li> -->
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PACKAGE-OFFERS' | translate}}: </b></span><span>{{packInfo.package_offers}}</span></p>
+              </li>
+              <!-- <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.PAYMENT-PHASE' | translate}}: </b></span><span>{{licenseInfo.payment_phase}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.AMOUNT' | translate}}: </b></span><span>{{licenseInfo.final_package_price}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.FIRST-PHASE' | translate}}: </b></span><span>{{licenseInfo.first_phase_amount}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.SECOND-PHASE' | translate}}: </b></span><span>{{licenseInfo.second_phase_amount}}</span></p>
+              </li>
+              <li>
+                  <p><span class="font-weight-bold"><b>{{'PENDING-REPORT.LIST.THIRD-PHASE' | translate}}: </b></span><span>{{licenseInfo.third_phase_amount}}</span></p>
+              </li> -->
+             
+          </ul>
+            
+          </div>
+      <div class="modal-footer">
+      <div class="button-demo">
+          <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CLOSE-BTN' | translate}}</button>
+      </div>
+      </div>
+</ng-template>
+
+
+<ng-template #instructorData let-modal>
+  <div class="modal-header deleteRowModal">
+  <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+      <div class="modal-about">
+          <div class="font-weight-bold p-t-10 font-17">
+             Instruct Details</div>
+      </div>
+      </div>
+  </h4>
+  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true"><i class="material-icons">close</i></span>
+  </button>
+  </div>
+  <div class="modal-body">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="table-responsive">
+            <table id="customers" *ngIf="instructorInfo.length>0">
+              <tr>
+                <th>Scheduled Date</th>
+                <th>Scheduled Time</th>
+                <th>Instructor Name</th>  
+                <th>Status</th>  
+                <th>Remarks</th>       
+              </tr>
+              <tr *ngFor="let insData of instructorInfo">
+                <td>{{insData.scheduleDate | date:'dd-MM-yyyy'}}</td>
+                <td>{{insData.schedule_time}}</td>
+                <td>{{insData.name}}</td>
+                <td>{{insData.schedule_status == 1 ? 'Completed' : 'Scheduled'}}</td>
+                <td style="width:100px; word-wrap:break-word;">{{insData.schedule_remarks}}</td>
+              </tr>
+            </table>
+          </div>
+    </div>
+  </div>
+</ng-template>

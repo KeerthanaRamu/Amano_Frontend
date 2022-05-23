@@ -1,0 +1,160 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">{{'PRE-REQUISITE.TITLE' | translate}}</h4>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>{{'PRE-REQUISITE.TITLE' | translate}}</h2>
+                        
+                    </div>
+                    <div class="body">
+                        <form class="m-4" [formGroup]="addPreRequisiteForm">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-chip-list #chipList aria-label="Fruit selection">
+                                                <mat-chip
+                                                    *ngFor="let licenseDt of license_selected"
+                                                    [selectable]="selectable"
+                                                    [removable]="removable"
+                                                    (removed)="remove(licenseDt)">
+                                                    {{licenseDt}}
+                                                    <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon> 
+                                                </mat-chip> 
+                                                <mat-label>{{'PACKAGE.LIST.LICENSE-TYPE' | translate}}</mat-label>
+                                                <input type="text" matInput 
+                                                #licenceInput
+                                                #autocompleteTrigger="matAutocompleteTrigger"
+                                                [matChipInputFor]="chipList"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                (matChipInputTokenEnd)="add($event)"
+                                                [formControl]="license_type" [matAutocomplete]="autoLicense">
+                                        </mat-chip-list>
+                                        <mat-autocomplete #autoLicense="matAutocomplete" (optionSelected)="selectedListType($event)" autoActiveFirstOption>
+                                        <mat-option *ngFor="let option of licenseTypeList | async" [value]="option.license_class">
+                                                <mat-checkbox color="primary" style="padding: 0 12px;" [checked]="license_selected.indexOf(option.license_class) >= 0"></mat-checkbox>
+                                            {{option.license_class}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <button mat-icon-button matSuffix style="width: 34px; height: 34px;" (click)="openAuto(autocompleteTrigger)"> <mat-icon style="width: 34px;">expand_more</mat-icon></button>
+                                        
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                   
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                    <div class="row">
+                                       <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 mb-2">
+                                           <label>{{'PRE-REQUISITE.PRE-REQUISITE-ENG' | translate}}*</label>
+                                            <div formArrayName="preRequisites_english">
+                                                <div *ngFor="let obj of preRequisites_english.controls; let ti=index"
+                                                    style="margin-top: 10px;margin-bottom: 10px;">
+                                                    <mat-form-field class="example-full-width mb-3" appearance="outline"> 
+                                                        <input type="text" matInput [formControlName]="ti"  required>
+                                                            <button  matSuffix style="cursor:pointer;border-style: none;background-color: white;" (click)="removePreRequisiteEnglish(ti)"  [disabled]="ti==0"> <mat-icon>remove</mat-icon></button>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2" style="padding-top: 50px;">
+                                           <a style="cursor: pointer;" (click)="addNewPreRequisiteEnglish()"><mat-icon>add</mat-icon></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <div class="row">
+                                           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 mb-2">
+                                               <label>{{'PRE-REQUISITE.PRE-REQUISITE-MALAY' | translate}}*</label>
+                                                <div formArrayName="preRequisites_malay">
+                                                    <div *ngFor="let obj of preRequisites_malay.controls; let ti=index"
+                                                        style="margin-top: 10px;margin-bottom: 10px;">
+                                                        <mat-form-field class="example-full-width mb-3" appearance="outline"> 
+                                                            <input type="text" matInput [formControlName]="ti"  required>
+                                                                <button  matSuffix style="cursor:pointer;border-style: none;background-color: white;" (click)="removePreRequisiteMalay(ti)"  [disabled]="ti==0"> <mat-icon>remove</mat-icon></button>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2" style="padding-top: 50px;">
+                                               <a style="cursor: pointer;" (click)="addNewPreRequisiteMalay()"><mat-icon>add</mat-icon></a>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                        <div class="row">
+                                           <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 mb-2">
+                                               <label>{{'PRE-REQUISITE.REQ-DOCUMENT-ENG' | translate}}*</label>
+                                                <div formArrayName="reqDocuments_english">
+                                                    <div *ngFor="let obj of reqDocuments_english.controls; let ti=index"
+                                                        style="margin-top: 10px;margin-bottom: 10px;">
+                                                        <mat-form-field class="example-full-width mb-3" appearance="outline"> 
+                                                            <input type="text" matInput [formControlName]="ti"  required>
+                                                                <button  matSuffix style="cursor:pointer;border-style: none;background-color: white;" (click)="removeReqDocumentsEnglish(ti)"  [disabled]="ti==0"> <mat-icon>remove</mat-icon></button>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2" style="padding-top: 50px;">
+                                               <a style="cursor: pointer;" (click)="addNewReqDocumentsEnglish()"><mat-icon>add</mat-icon></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                                            <div class="row">
+                                               <div class="col-xl-11 col-lg-11 col-md-11 col-sm-11 mb-2">
+                                                   <label>{{'PRE-REQUISITE.REQ-DOCUMENT-MALAY' | translate}}*</label>
+                                                    <div formArrayName="reqDocuments_malay">
+                                                        <div *ngFor="let obj of reqDocuments_malay.controls; let ti=index"
+                                                            style="margin-top: 10px;margin-bottom: 10px;">
+                                                            <mat-form-field class="example-full-width mb-3" appearance="outline"> 
+                                                                <input type="text" matInput [formControlName]="ti"  required>
+                                                                    <button  matSuffix style="cursor:pointer;border-style: none;background-color: white;" (click)="removeReqDocumentsMalay(ti)"  [disabled]="ti==0"> <mat-icon>remove</mat-icon></button>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 mb-2" style="padding-top: 50px;">
+                                                   <a style="cursor: pointer;" (click)="addNewReqDocumentsMalay()"><mat-icon>add</mat-icon></a>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                    <button class="btn-space" mat-raised-button
+                                        color="primary" (click)="setPreRequisiteDetails()" [disabled]="license_selected.length ==0 || !addPreRequisiteForm.valid || addPreRequisiteForm.value.preRequisites_english.length == 0 || addPreRequisiteForm.value.preRequisites_malay.length == 0 || addPreRequisiteForm.value.reqDocuments_english.length == 0 || addPreRequisiteForm.value.reqDocuments_malay.length == 0">{{'BUTTON.ADD-BTN' | translate}}</button>
+                                    <button type="button" mat-button (click)="goBack()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

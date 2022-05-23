@@ -1,0 +1,587 @@
+{
+
+  
+  "MENUITEMS": {
+    "CLIENT":{
+      "TEXT":"Client"
+    },
+    "USER":{
+      "TEXT":"User"
+    },
+    "HOME": {
+      "TEXT": "Dashboard"
+    },
+    "STUDENTS": {
+      "TEXT": "Students",
+      "LIST": { 
+        "ALL-STUDENTS": "Students List",
+        "ADD-STUDENT": "Student Registration"
+      }
+    },
+    "LICENSE": {
+      "TEXT": "License",
+      "LIST": { 
+        "ALL-LICENSE": "License List",
+        "ADD-LICENSE": "Add License"
+      }
+    },
+    "PACKAGE": {
+      "TEXT": "Package",
+      "LIST": { 
+        "ALL-PACKAGE": "Package List",
+        "ADD-PACKAGE": "Add Package"
+      }
+    },
+    "PRE-REQUISITE": {
+      "TEXT": "Pre-Requistie",
+      "LIST": { 
+        "ALL-PRE-REQUISITE": "Pre-Requisite List",
+        "ADD-PRE-REQUISITE": "Add Pre-Requisite"
+      }
+    },
+    "EMPLOYEE":{
+      "TEXT":"Employee"
+    },
+    "SCHEDULE": {
+      "TEXT": "Schedule Planning",
+      "STUD-TEXT":"Student Schedule",
+      "LIST": { 
+        "ALL-SCHEDULE": "Schedule List",
+        "ADD-SCHEDULE": "Add Schedule"
+      }
+    },
+    "RETEST":{
+      "TEXT":"ReTest Payment"
+    },
+    "TIMELINE":{
+      "TEXT":"Timeline"
+    },
+    "REFUND":{
+      "TEXT":"Refund"
+    },
+    "TIME":{
+      "TEXT":"Time"
+    },
+    "MESSAGE-TEMPLATE":{
+      "TEXT":"Message Template"
+    },
+    "APPLY":{
+      "TEXT":"Apply License"
+    },
+    "REFUND-PROCESS":{ "TEXT":"Refund Process"},
+    "LICENSE-PROCESS":{ "TEXT":"License Processing"},
+    "RENEWAL-PROCESS":{ "TEXT":"Renewal Process"},
+    "GENERATE-FORM":{ "TEXT":"Generate L1/L8 Form"},
+    "REPORTS": {
+      "TEXT": "Reports",
+      "LIST": { 
+        "REVENUE-REPORT": "Revenue Report",
+        "REGISTRATION-REPORT": "Registration Report",
+        "SALES-REPORT": "Sales Report",
+        "PENDING-REPORT": "Pending Payment",
+        "PENDING-SCHEDULE": "Pending Schedule"
+      }
+    }
+    
+  },
+
+  "BUTTON":{
+    "NEXT-BTN":"Next",
+    "BACK-BTN":"Back",
+    "ADD-BTN":"Submit",
+    "EDIT-BTN":"Update",
+    "CONFIRM-BTN":"Confirm",
+    "CANCEL-BTN":"Cancel",
+    "CLEAR-BTN":"Clear",
+    "CLOSE-BTN":"Close",
+    "DEL-BTN":"Delete",
+    "SEARCH-BTN":"Search",
+    "CONFIRMATION":"Are you sure?",
+    "PROCEED-BTN":"Proceed",
+    "BUY-BTN":"Buy",
+    "EXCEL-BTN":"Excel",
+    "PRINT-BTN":"Print",
+    "PDF-BTN":"pdf",
+    "L1-BTN":"Print L1 Form",
+    "L2-BTN":"Print L8 Form",
+    "SEARCH-STUDENT":"Search Students",
+    "PAYMENT":"Make Payment",
+    "VIEW-STUDENT":"View Student Details",
+    "VIEW-PRICE-BTN":"View Price",
+    "FILTER-BTN":"Filter"
+  },
+  "ForgotPass": {
+    "ForgotPass": "Forgot Password",
+    "EMale": "Email Id",
+    "Email": "Enter Valid Email",
+    "Submit": "Send password reset email",
+    "Back":"Already a member ? Sign in"
+  },
+
+  "DASHBOARD":{
+    "TITLE":"Dashboard",
+    "TOTAL-STUDENTS":"Total Registration",
+    "TOTAL-REVENUE":"Total Sales",
+    "REGISTRATION-REPORT":"Registration Report",
+    "SALES-REPORT":"Sales Report",
+    "YESTERDAY":"Yesterday",
+    "TODAY":"Today",
+    "MONTH":"This Month"
+  },
+
+  "STUDENT-REGISTRATION":{
+    "TITLE":"Student Registration",
+    "LISTTITLE":"All Students",
+    "EDITTITLE":"Update Student",
+    "SUBTITLE1":"Personal Details",
+    "SUBTITLE2":"Preference",
+    "SUBTITLE3":"Upload Document",
+    "SUBTITLE4":"Document Details",
+    "CONFIRMTITLE":"Confirm Details",
+    "DELETETITLE":"Delete Student",
+    "UPDATESTATUS":"Update Status",
+    "ACTIONS":"Actions",
+    "LIST":{
+        "NAME":"Name",
+        "IC-TYPE":"NRIC Type",
+        "NRIC":"NRIC Number",
+        "ID":"ID Number",
+        "GENDER":"Gender",
+        "PASSPORT":"Passport Number",
+        "NATIONALITY":"Nationality",
+        "PLACEBIRTH":"Place Of Birth",
+        "IC-ADDRESS":"Location Address",
+        "ADDRESS1":"Address1",
+        "ADDRESS2":"Address2",
+        "POSTAL-CODE":"Postal Code",
+        "CITY":"City",
+        "EMAIL":"Email Address",
+        "MOBILENO":"Mobile No",
+        "RACE":"Race",
+        "DOB":"Date Of Birth",
+        "OTHERRACE":"Other Race",
+        "OTHER":"Other Place Of Birth",
+        "STATE":"State",
+        "PREFERENCE":"Prefered Language",
+        "EMERGENCY-NAME":"Emergency Contact Name",
+        "EMERGENCY-NUMBER":"Emergency Contact Number",
+        "EXISTING-LICENSE":"Existing License",
+        "EXPIRYDATE":"License Expiry Date",
+        "USERNAME":"User Name",
+        "PASSWORD":"Password",
+        "PHOTO":"Upload Photo",
+        "NRIC-FRONT":"NRIC Front",
+        "NRIC-REAR":"NRIC Rear",
+        "PASSPORT-FRONT":"Passport Front",
+        "WORK-PERMIT":"Work Permit Front",
+        "EXISTING-LICENSE-FRONT":"Existing License Front",
+        "EXISTING-LICENSE-REAR":"Exisiting License Rear",
+        "STATUS":"Status",
+        "NEXT-STATUS":"Status Progress",
+        "TRANSACTION":"Enrollment Number",
+        "REMARKS":"Remarks",
+        "HINT":"Use 8 or more characters with a mix of letters, numbers & symbols",
+        "PROFILE-IMG":"Profile Image"
+    }
+  },
+  "REG-VALIDATION": {
+    "Name": "Enter your name",
+    "NricType": "Enter NRIC Type",
+    "NricNum": "Enter NRIC number",
+    "PassportNum": "Enter Passport number",
+    "Dob": "Enter Date of Birth",
+    "Gender": "Enter Gender",
+    "POB": "Enter Place of Birth",
+    "Nationality": "Enter Nationality",
+    "NricAdd": "Enter Location Address",
+    "PostalCode": "Enter Zip",
+    "City": "Enter City",
+    "State": "Enter State",
+    "Email": "Enter Valid Email",
+    "Mob": "Enter Mobile Number",
+    "Race": "Enter Race",
+    "PrefLAng": "Enter Prefered Language",
+    "EmerCName": "Enter Valid Emergency Contact Name",
+    "EmerCNum": "Enter Valid Emergency Contact Number",
+    "UserName": "Enter User Name",
+    "Passwoord": "Enter Valid Password",
+    "NricFImg": "Enter NRIC Front Image",
+    "NricRImg": "Enter NRIC Rear Image",
+    "PasFImg": "Enter Passport Image",
+    "PassRImg": "",
+    "Img": "Upload Photo",
+    "Hint":"Use 8 or more characters with a mix of letters, numbers & symbols",
+    "Subject":"Subject",
+    "subject":"Enter Subject",
+    "Message":"Message",
+    "message":"Enter Message"
+  },
+
+  "LICENSE":{
+    "TITLE":"Add License",
+    "LISTTITLE":"All License",
+    "EDITTITLE":"Update License",
+    "DELETETITLE":"Delete License",
+    "ACTIONS":"Actions",
+    "LIST":{
+        "LICENSE-CLASS":"License Class",
+        "MIN-AGE":"Minimum Age",
+        "LICENSE-DESC":"License Description",
+        "LICENSE-ENGLISH":"License Description in English",
+        "LICENSE-MALAY":"License Description in Malay",
+        "CRITERIA-ENGLISH":"Criteria in English",
+        "CRITERIA-MALAY":"Criteria in Malay",
+        "LICENSE-FLOW":"License Flow",
+        "LICENSE-IMAGE":"License Image",
+        "CDL-REQ":"Have been holding  (CDL) for at least one year.",
+        "GDL-PRACTICAL":"GDL Practical",
+        "PSV-PRACTICAL":"PSV Practical",
+        "ACTIVE":"Active",
+        "UPGRADE":"Upgrade",
+        "UPGRADE-LICENSE":"Upgrade License",
+        "ADVANCE":"Advance License",
+        "ADVANCE-LICENSE":"Advance License"
+    }
+  },
+
+  "PACKAGE":{
+    "TITLE":"Add Package",
+    "LISTTITLE":"All Package",
+    "EDITTITLE":"Update Package",
+    "DELETETITLE":"DELETE Package",
+    "ACTION":"Actions",
+    "LIST":{
+        "LICENSE-PRICE-TITLE":"Provide License Price",
+        "LICENSE-TYPE":"License Type",
+        "PACKAGE-TYPE":"Package Type",
+        "PACKAGE-OFFERS":"Package Offers",
+        "PACKAGE-ENG":"Package English",
+        "PACKAGE-MALAY":"Package Malay",
+        "PACKAGE-DESC-ENG":"Package Description in English",
+        "PACKAGE-DESC-MALAY":"Package Description in Malay",
+        "PACKAGE-IMAGE":"Package Image",
+        "PACKAGE-PRICE":"Package Price",
+        "PROMO-DIS":"Promo Discount",
+        "FIANL-PACKAGE-PRICE":"Final Package Price",
+        "PAYMENT-PHASE":"Payment Phase",
+        "PAYMENT-PHASE-AMT-1":"First Phase Amount",
+        "PAYMENT-PHASE-AMT-2":"Second Phase Amount",
+        "PAYMENT-PHASE-AMT-3":"Third Phase Amount",
+        "PACKAGE-PHASE-DESC-ENG":"Package Phase Description English",
+        "PACKAGE-PHASE-DESC-MALAY":"Package Phase Description Malay",
+        "GLOBAL-VIEW":"Global View",
+        "UPGRADE":"Upgrade",
+        "L-LICENSE":"With L License",
+        "AFFORDABLE":"Affordable",
+        "PREMIUM":"Premium",
+        "LICENSE-PRICE":"License Price"
+    }
+  },
+  "PRE-REQUISITE":{
+    "TITLE":"Add Pre-requisite",
+    "LISTTITLE":"All Pre-requisite",
+    "EDITTITLE":"Update Pre-requisite",
+    "ACTION":"Actions",
+    "LICENSE-CODE":"License Code",
+    "LICENSE-TYPE":"License Type",
+    "PRE-REQUISITE-ENG":"Pre-requisite in English",
+    "PRE-REQUISITE-MALAY":"Pre-requisite in Malay",
+    "REQ-DOCUMENT-ENG":"Required Documents in English",
+    "REQ-DOCUMENT-MALAY":"Required Documents in Malay"
+  },
+  "EMPLOYEE":{
+    "TITLE":"New Employee",
+    "LISTTITLE":"All Employee",
+    "EDITTITLE":"Update Employee",
+    "DELETETITLE":"Delete Employee",
+    "ACTION":"Actions",
+    "LIST":{
+      "ROLE":"Role",
+      "NAME":"First Name",
+      "LNAME":"Last Name",
+      "USERNAME":"User Name",
+      "PASSWORD":"Password",
+      "MOBILENO":"Mobile Number",
+      "EMAILID":"Email Id",
+      "PROFILE-IMG":"Profile Image"
+    }
+  }, 
+  "SCHEDULE":{
+    "TITLE":"Schedule",
+    "STUD-TITLE":"Student Schedule",
+    "VIEWTITLE":"Schedule Details",
+    "TRANSACTION-NUMBER":"Enrollment Number",
+    "LICENSE-CLASS":"License Class",
+    "LIST":{
+        "SCHEDULE":"Schedule",
+        "LEAD-TIME":"Define Schedule Lead Time (Day)",
+        "LICENSE":"License Class",
+        "SCHEDULE-VIEW":"Schedule View",
+        "SCHEDULE-DATE":"Schedule Date",
+        "ASSIGNMENT":"Schedule View Assignment",
+        "START-DATE":"Start date",
+        "END-DATE":"End date",
+        "ADD-REMARKS":"Add Remarks",
+        "SCHEDULE-TIME":"Schedule Time",
+        "SELECT-INSTRUCTOR":"Select Instructor",
+        "NO-SCHEDULE":"No Schedule Available",
+        "MAKE-PAYMENT":"Please Make Payment for",
+        "MAKE-PAYMENT-OF":"Please Make Payment of"
+    }
+  },
+  "RETEST-PAYMENT":{
+    "TITLE":"Add Retest Payment",
+    "LISTTITLE":"All Retest Payment",
+    "EDITTITLE":"Update Retest Payment",
+    "DELETETITLE":"Delete Retest Payment",
+    "ACTION":"Actions",
+    "LIST":{
+      "RETEST-TYPE":"Retest Type",
+      "RETEST-AMOUNT":"Retest Amount",
+      "LICENSE":"License Class",
+      "PACKAGE-OFFERS":"Package Offers",
+      "RETEST-TIMES":"No Of Times"
+    }
+  },
+  "REFUND":{
+    "TITLE":"Add Refund",
+    "LISTTITLE":"All Refund",
+    "EDITTITLE":"Update Refund",
+    "DELETETITLE":"Delete Refund",
+    "ACTION":"Actions",
+    "LIST":{
+      "REFUND-TYPE":"Refund Type",
+      "LICENSE":"License",
+      "PACKAGE-OFFERS":"Package Offers",
+      "REFUND-AMOUNT":"Refund Amount",
+      "REFUND-MODE":"Refund For"
+    }
+  },
+  "TIME-MASTER":{
+    "TITLE":"Add Time",
+    "LISTTITLE":"All List",
+    "EDITTITLE":"Update Time",
+    "DELETETITLE":"Delete Time",
+    "ACTION":"Actions",
+    "LIST":{
+      "WORKING-HOURS":"Working Hours",
+      "REST-HOUR":"Rest Hour",
+      "CUT-OVER-TIME":"Cut Over Time"
+
+    }
+  },
+  "MESSAGE":{
+    "TITLE":"Add Message",
+    "LISTTITLE":"All Message",
+    "EDITTITLE":"Update Message",
+    "DELETETITLE":"Delete Message",
+    "ACTION":"Actions",
+    "LIST":{
+      "MESSAGE-TYPE":"Type",
+      "MESSAGE-ENG":"Message in English",
+      "MESSAGE-MALAY":"Message in Malay"
+    }
+  },
+  "SELECT-LICENSE":{
+    "TITLE":"Select License",
+    "ACTION":"Actions",
+    "LIST":{
+      "LICENSE":"Kelas Lesen",
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "EXISTING-LICENSE":"Existing License",
+      "BASE-LICENSE":"Base License",
+      "EXPIRYDATE":"License Expiry Date",
+      "EXISTING-LICENSE-FRONT":"Existing License Front",
+      "EXISTING-LICENSE-REAR":"Exisiting License Rear",
+      "CDL-LICENSE":"Is your CDL license held for  more than 1 year?",
+      "CDL-YES":"Yes",
+      "CDL-NO":"No",
+      "APPLY-GDL":"Apply GDL License",
+      "APPLY-PSV":"Apply PSV License"
+    }
+  },
+  "REFUND-PROCESS":{
+    "TITLE":"Refund Process",
+    "ACTION":"Actions",
+    "LIST":{
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "TRANSACTION-NUMBER":"Enrollment Number",
+      "STUDENT-NAME":"Student Name",
+      "TRAN-NO":"Enrollment Number",
+      "PACKAGE":"Package",
+      "PACKAGE-TYPE":"Payment Phase",
+      "PACKAGE-AMOUNT":"Package Amount",
+      "LICENSE":"License",
+      "LICENSE-AMOUNT":"License Amount",
+      "PAYMENT-STATUS":"Payment Status",
+      "AMOUNT-PAID":"Amount Paid",
+      "STATUS":"Status",
+      "REFUND-AMOUNT":"Refund Amount",
+      "REMARKS":"Remarks"
+    }
+  },
+  "LICENSE-PROCESS":{
+    "TITLE":"License Processing",
+    "ACTION":"Actions",
+    "LIST":{
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "TRANSACTION-NUMBER":"Enrollment Number",
+      "LICENSE-TYPE":"License Type",
+      "LICENSE-NO":"License No",
+      "EXPIRY-DATE":"Expiry Date",
+      "RENEWAL-AMT":"Renewal Amount"
+    }
+  },
+
+  "GDL-APPLY-LICENSE":{
+    "TITLE":"Apply GDL/PSV License",
+    "ACTION":"Actions",
+    "LIST":{
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "TRANSACTION-NUMBER":"Enrollment Number"
+    }
+  },
+
+  "RENEWAL-PROCESS":{
+    "TITLE":"Renewal Processing",
+    "ACTION":"Actions",
+    "LIST":{
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "TRANSACTION-NUMBER":"Enrollment Number"
+      
+    }
+  },
+  "TIMELINE":{
+    "TITLE":"Timeline",
+    "NOTE": " Please go to Driving School to present the result slip and photos to process your L License",
+    "ACTION":"Actions",
+    "LIST":{
+      "NRIC-NUMBER":"NRIC Number",
+      "PASSPORT-NUMBER":"Passport Number",
+      "TRANSACTION-NUMBER":"Enrollment Number"
+    }
+  },
+
+  "SELECT-PACKAGE":{
+    "TITLE":"Select Package"
+  },
+  "UPDATE-PACKAGE":{
+    "TITLE":"UPDATE Package"
+  },
+  "VIEW-PACKAGE":{
+    "TITLE":"View Package Flow",
+    "SUBTITLE1":"Package Flow",
+    "SUBTITLE2":"Dress Code",
+    "DRESS-CODE-MALE":"Male",
+    "DRESS-CODE-FEMALE":"Female",
+    "VIEWIMAGE":"View Package Flow",
+    "NOTE":"Please click on the image to magnify or enhance the image"
+  },
+  "REGISTRATION-REPORT":{
+    "TITLE":"Registration Report",
+    "LIST":{
+      "FROMDATE":"From Date",
+      "TODATE":"To Date"
+    }
+  },
+  "REVENUE-REPORT":{
+    "TITLE":"Revenue Report",
+    "LIST":{
+      "FROMDATE":"From Date",
+      "TODATE":"To Date",
+      "STUDENT-NAME":"Student Name",
+      "TRAN-NO":"Enrollment Number",
+      "PACKAGE":"Package",
+      "PACKAGE-TYPE":"Payment Phase",
+      "PACKAGE-AMOUNT":"Package Amount",
+      "PAYMENT-STATUS":"Payment Status",
+      "LICENSE":"License",
+      "AMOUNT-PAID":"Amount Paid",
+      "STATUS":"Status"
+
+    }
+  },
+  "SALES-REPORT":{
+    "TITLE":"Sales Report",
+    "LIST":{
+      "STUDENT-NAME":"Student Name",
+      "NRIC":"NRIC Number",
+      "PASSPORT":"Passport Number",
+      "TRAN-NO":"Enrollment Number",
+      "PACKAGE":"Package",
+      "PAYMENT-PHASE":"Payment Phase",
+      "LICENSE":"License",
+      "AMOUNT-PAID":"Amount Paid"
+    }
+  },
+  "PENDING-SCHEDULE":{
+    "TITLE":"Pending Schedule",
+    "LIST":{
+      "STUDENT-NAME":"Student Name",
+      "NRIC":"IC Number",
+      "PASSPORT":"Passport Number",
+      "MOBILE-NUMBER":"Mobile Number",
+      "PACKAGE":"Package",
+      "STATUS":"Status",
+      "LICENSE":"License"
+    }
+  },
+  "PENDING-REPORT":{
+    "TITLE":"Pending Payment",
+    "SUBTITLE1":"Student Details",
+    "SUBTITLE2":"License Details",
+    "SUBTITLE":"Student License Details",
+    "DELETETITLE":"Delete License Details",
+    "PAYMENT":"Make Payment",
+    "LIST":{
+      "FROMDATE":"From Date",
+      "TODATE":"To Date",
+      "STUDENT-NAME":"Student Name",
+      "NRIC":"NRIC Number",
+      "PASSPORT":"Passport Number",
+      "TRAN-NO":"Enrollment Number",
+      "MOBILE-NUMBER":"Mobile Number",
+      "EMAIL-ID":"Email Id",
+      "ACTIONS":"Actions",
+      "LICENSE-CLASS":"License",
+      "PACKAGE-NAME":"Package Name",
+      "PACKAGE-DESCRIPTION":"Package Description",
+      "PACKAGE-TYPE":"Package Type",
+      "PACKAGE-OFFERS":"Package Offers",
+      "PAYMENT-PHASE":"Payment Phase",
+      "AMOUNT":"Final Package Price",
+      "FIRST-PHASE":"First Phase Price",
+      "SECOND-PHASE":"Second Phase Price",
+      "THIRD-PHASE":"Third Phase Price",
+      "PAYMENT-TYPE":"Payment Type",
+      "AMOUNT-TO-PAY":"Amount to be paid",
+      "CARD":"Card",
+      "CASH":"Cash",
+      "CHEQUE":"Cheque",
+      "TRANSACTION-NO":"Transaction Id",
+      "RECEIPT-NO":"Receipt No",
+      "CHEQUE-NO":"Cheque No"
+    }
+  },
+  "GENERATE-FORM":{
+    "TITLE":"Generate L1/L8 Form",
+    "LIST":{
+      "FROMDATE":"From Date",
+      "TODATE":"To Date",
+      "STATUS":"Status",
+      "STUDENT-NAME":"Student Name",
+      "NRIC":"NRIC Number",
+      "PASSPORT":"Passport Number",
+      "TRAN-NO":"Enrollment Number",
+      "PACKAGE":"Package",
+      "PACKAGE-AMOUNT":"Package Amount",
+      "LICENSE":"License",
+      "LICENSE-PRICE":"License Price"
+    }
+  }
+}

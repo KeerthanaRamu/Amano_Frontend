@@ -1,0 +1,573 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style ">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">{{'GENERATE-FORM.TITLE' | translate}}</h4>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="card">
+            <form class="m-4"  [formGroup]="regReportForm" >
+              <div class="row">
+                  <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+                      <mat-form-field class="example-full-width" appearance="outline">
+                        <mat-label>{{'GENERATE-FORM.LIST.STATUS' | translate}}</mat-label>
+                        <mat-select formControlName="status">
+                          <mat-option *ngFor="let option of statusList" [value]="option.id">
+                              {{option.status}}
+                            </mat-option>
+                          </mat-select> 
+                      </mat-form-field>
+                  </div>
+                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;">
+                    <button mat-raised-button  color="primary" (click)="getLformFilterData()">{{'BUTTON.SEARCH-STUDENT' | translate}}</button>
+                  </div> 
+                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;" *ngIf="data">
+                      <button mat-raised-button style="background-color:#8e9197;color:white" class="primary" (click)="printL1Page()">{{'BUTTON.L1-BTN' | translate}}
+                        <i class="fas fa-print"></i>
+                    </button>  
+                  </div>
+                  <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;" *ngIf="data">
+                    <button mat-raised-button style="background-color:#8e9197;color:white"  class="primary" (click)="printL8Page()">{{'BUTTON.L2-BTN' | translate}}
+                      <i class="fas fa-print"></i>
+                    </button>
+                  </div>
+              </div>
+              <div class="row" *ngIf="this.regReportForm.value.status !='' && data">
+                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2">
+                  </div> 
+                  <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>{{'GENERATE-FORM.LIST.FROMDATE' | translate}}*</mat-label>
+                      <input matInput [matDatepicker]="picker" formControlName="from_date">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                      <mat-error *ngIf="regReportForm.get('from_date').hasError('required')">
+                              {{'GENERATE-FORM.LIST.FROMDATE' | translate}} is required 
+                      </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 mb-2">
+                    <mat-form-field class="example-full-width" appearance="outline">
+                      <mat-label>{{'GENERATE-FORM.LIST.TODATE' | translate}}*</mat-label>
+                      <input matInput [matDatepicker]="topicker" formControlName="to_date">
+                      <mat-datepicker-toggle matSuffix [for]="topicker"></mat-datepicker-toggle>
+                      <mat-datepicker #topicker></mat-datepicker>
+                      <mat-error *ngIf="regReportForm.get('to_date').hasError('required')">
+                              {{'GENERATE-FORM.LIST.TODATE' | translate}} is required 
+                      </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;">
+                  <button mat-raised-button  color="primary" (click)="getDateFilteredData()">{{'BUTTON.FILTER-BTN' | translate}}</button>
+                </div> 
+                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 mb-2" style="padding: 10px;text-align: center;">
+                  <button mat-raised-button (click)="exportToExcel()" class="btn btn-success">{{'BUTTON.EXCEL-BTN' | translate}}
+                    <i class="fas fa-file-excel"></i>
+                  </button>
+                </div> 
+              </div>
+
+          </form>
+        <div class="body" *ngIf="data">
+          <div class="container">
+            <div class="row">
+               <ngx-datatable class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
+                    [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" 
+                    [limit]="5" [selected]="selected" [selectionType]="'checkbox'" [selectAllRowsOnPage]="true">
+                    <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" 
+                    [draggable]="false" [resizeable]="false"  >
+                      <ng-template ngx-datatable-header-template let-value="value" 
+                      let-allRowsSelected="allRowsSelected"
+                      let-selectFn="selectFn">
+                      <input type="checkbox" [checked]="allRowsSelected"
+                       />
+                      </ng-template>
+                      <ng-template ngx-datatable-cell-template let-row="row" let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                      <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                      </ng-template>
+                      </ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'GENERATE-FORM.LIST.STUDENT-NAME' | translate}}" prop="name" [width]="130"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'GENERATE-FORM.LIST.NRIC' | translate}}" prop="nric_number" [width]="130"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'GENERATE-FORM.LIST.PASSPORT' | translate}}" prop="passport_number" [width]="200"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'GENERATE-FORM.LIST.TRAN-NO' | translate}}" prop="enrollment_no" [width]="200"></ngx-datatable-column>
+                    <ngx-datatable-column [flexGrow]="2" name="{{'GENERATE-FORM.LIST.PACKAGE' | translate}}" prop="package_name" [width]="200"></ngx-datatable-column>
+                    <!-- <ngx-datatable-column [flexGrow]="1" name="{{'GENERATE-FORM.LIST.PACKAGE-AMOUNT' | translate}}" prop="package_price" [width]="200"></ngx-datatable-column> -->
+                    <ngx-datatable-column [flexGrow]="1" name="{{'GENERATE-FORM.LIST.LICENSE' | translate}}" prop="license_class" [width]="200"></ngx-datatable-column>
+                    <!-- <ngx-datatable-column [flexGrow]="1" name="{{'GENERATE-FORM.LIST.LICENSE-PRICE' | translate}}" prop="final_price" [width]="200"></ngx-datatable-column> -->
+                      
+                  </ngx-datatable>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <div class="container-fluid" id="printL1Form"  hidden>
+      <div class="invoice-box" style="border: 1px solid black;page-break-after: always;" *ngFor="let ldata of selected"> 
+          <div class="row" style="margin: auto;padding-top: 10px;">   
+              <div class="col-2 labelleft">    
+                  <img src="assets/images/JPJ_LOGO.png" alt="no image">  
+              </div>
+              <div class="col-8" style="text-align: center;">    
+                  <br/>
+                  <h6 style="font-size: 16px;">JABATAN PENGANGKUTAN JALAN MALAYSIA</h6>
+                  <h6 style="font-size: 16px;"><b>BORANG PERMOHONAN LESEN MEMANDU</b></h6>
+              </div>
+              <div class="col-2">   
+                  <br/><br/>
+                  <h6>(JPJL1)</h6>
+              </div>
+          </div>  
+          <div class="row" style="padding-top: 10px;margin: auto;">
+            <div class="col-12">   
+              <label><b>i) Sila baca panduan di muka sebelah sebelum mengisi borang ini</b></label>
+            </div>
+          </div>
+          <div class="row" style="padding-top: 2px;margin: auto;">   
+            <div class="col-12">
+              <label>ii) Gunakan HURUF BESAR</label>
+            </div>
+          </div>  
+          <hr style="border: 1px solid black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowhead" style="margin: auto;">  
+              <div class="col-12">
+              <label style="font-size: 14px;"><b>A. JENIS PERMOHONAN</b></label> <span></span>
+              </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowhead" style="margin: auto;">  
+              <div class="col-12">
+              <label style="font-size: 14px;"><b>B. BUTIR-BUTIR PEMOHON</b></label>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-8" style="padding-left: 35px">
+              <label style="font-weight: 600;">1. No. KP / Pasport / Polis / Tentera</label> <span style="padding: 20px;">  {{ldata.nricNo}}</span>
+              </div>
+              <div class="col-4">
+                  <label>2. Kategori</label> <span></span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">3. Nama</label> <span style="padding: 20px;">{{ldata.name}}</span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">4. Alamat</label> <span style="padding: 20px;"> {{ldata.address_nric}}</span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-4" style="padding-left: 35px">
+            <label style="font-weight: 600;">5. Poskod</label> <span style="padding: 20px;">{{ldata.postal_code}}</span>
+            </div>
+            <div class="col-8">
+                <label style="font-weight: 600;">6. Bandar</label> <span style="padding: 20px;">{{ldata.city}}</span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-8" style="padding-left: 35px">
+            <label style="font-weight: 600;">7. Negeri</label> <span style="padding: 20px;">{{ldata.state}}</span>
+            </div>
+            <div class="col-4" style="padding-left: 35px">
+              <label style="font-weight: 600;">8. Jantina (L / P)</label> <span style="padding: 20px;">{{ldata.gender}}</span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-8" style="padding-left: 35px">
+            <label style="font-weight: 600;">9. Tempat Lahir</label> <span style="padding: 20px;">{{ldata.placeBirth | date : 'dd-MM-yyyy'}}</span>
+            </div>
+            <div class="col-4">
+                <label style="font-weight: 600;">10. Tarikh Lahir</label> <span style="padding: 20px;">{{ldata.date_of_birth | date : 'dd-MM-yyyy'}}</span>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowhead" style="margin: auto;">  
+            <div class="col-12">
+              <label style="font-size: 14px;"><b>C. BUTIR-BUTIR LESEN</b></label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label  style="font-weight: 600;">1. Untuk Permohonan Lesen Memandu Baru, atau Tambah Kelas sahaja</label> <span style="padding: 20px;"></span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 10%">
+              <table style="width: 100%;
+              border-collapse: collapse;">
+                  <tr style="border: 1px solid black;">
+                    <th style="border: 1px solid black;text-align: center;">Kelas</th>
+                    <th style="border: 1px solid black;text-align: center;" colspan="3">Tarikh Lulus</th>
+                    <th style="border: 1px solid black;text-align: center;">Siri DL 18 / JPJL 3</th>
+                  </tr>
+                  <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;text-align: center;">{{ldata.license_class}}</td>
+                    <td style="border: 1px solid black;text-align: center;" colspan="3"></td>
+                    <td style="border: 1px solid black;text-align: center;"></td>
+                  </tr>
+              </table>
+            </div>
+        </div>
+        <hr style="border: 0.5px dotted black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-6" style="padding-left: 35px">
+              <label style="font-weight: 600;">2. Untuk Pertukaran Lesen sahaja</label><br/>
+                <label style="padding-left: 18px;font-weight: 600;"> Negara / Agensi yang mengeluarkan Lesen Asal</label>
+            </div>
+            <div class="col-6">
+              <br/>
+              <label style="font-weight: 600;">Jika negara asing, Nyatakan</label>
+            </div>
+          </div>
+          <hr style="border: 0.5px dotted black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+            <label style="font-weight: 600;">3. Untuk Permohonan Salinan atau Permit Memandu Antarabangsa sahaja</label> <span></span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 52px">
+            <label style="font-weight: 600;">No. Siri Lesen</label> <span style="padding: 20px;"></span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;" >  
+            <div class="col-12" style="padding-left: 52px">
+            <label style="font-weight: 600;">Kelas Lesen</label> <span style="padding: 20px;"></span>
+            </div>
+          </div>
+          <hr style="border: 0.5px dotted black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowGroup"style="margin: auto;">  
+            <div class="col-6"  style="padding-left: 35px">
+            <label style="font-weight: 600;">4. Tarikh Luput Lesen
+              </label> <span style="padding: 20px;"></span>
+            </div>
+            <div class="col-6" style="padding-left: 35px"> 
+                <label style="font-weight: 600;">5. Tempoh Permohonan</label> <span style="padding: 20px;"></span>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row rowhead" style="margin: auto;">  
+            <div class="col-12">
+            <label style="font-size: 14px;"><b>D. PENGAKUAN (Untuk Permohonan Lesen Belajar Memandu Baru, Lesen Memandu Baru atau Tukar Lesen Sahaja)</b></label>
+            </div>
+          </div>
+          <div class="row rowGroup"  style="margin: auto;">  
+            <div class="col-12" style="padding-left: 40px">
+              <label style="font-weight: 600;">Adakah anda mengalami perkara-perkara seperti berikut? Jika YA, tandakan  dalam petak berkenaan.</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="padding-top:10px;">  
+            <div class="col-6"  style="padding-left: 90px">
+            <label style="font-weight: 600;">Hukuman Mahkamah</label> 
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Pitam dan Pengsan</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="padding-top:10px;">  
+            <div class="col-6" style="padding-left: 90px">
+            <label style="font-weight: 600;">Penyakit Gila Babi</label> 
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Kesukaran membaca sejauh 23m pada masa cuaca terang</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="padding-top:10px;">  
+            <div class="col-6" style="padding-left: 90px">
+            <label style="font-weight: 600;">Cacat anggota</label> 
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Penyakit Lain, Nyatakan ..........................................</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="padding-top:10px">  
+            <div class="col-12" style="padding-left: 90px">
+            <label style="font-weight: 600;">No. Pendaftaran Kenderaan</label> 
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 40px">
+              <label style="font-weight: 600;">Saya mengaku bahawa segala maklumat yang diberikan di atas adalah benar.</label>
+            </div>
+          </div>
+          <div class="row rowGroup"  style="padding-top:10px;margin: auto;">  
+            <div class="col-6">
+              <label style="font-weight: 600;">Tarikh ..........................................................</label>
+            </div>
+            <div class="col-6" style="text-align: center;">
+              <label>...............................................................................</label><br/>
+              <label style="text-align: center;font-weight: 600;">Tandatangan Pemohon</label>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <!-- <mat-divider></mat-divider> -->
+          <div class="row" style="padding-top:10px;padding-bottom: 50px;">   
+            <div class="col-2 labelleft">    
+            </div>
+            <div class="col-8" style="text-align: center;">    
+                <h6 style="font-size: 14px;"><b>KEGUNAAN PEJABAT</b></h6>
+            </div>
+            <div class="col-2">   
+            </div>
+          </div>
+      </div>
+    
+
+    </div>
+
+
+    <div class="container-fluid" id="printL8Form" hidden>
+      <div class="invoice-box"  style="border: 1px solid black;page-break-after: always;" *ngFor="let ldata of selected"> 
+          <div class="row" style="margin: auto;padding-top: 10px;">   
+              <div class="col-2 labelleft">    
+                  <img src="assets/images/JPJ_LOGO.png" alt="no image">  
+              </div>
+              <div class="col-8" style="text-align: center;">    
+                <br/>
+                  <h6 style="font-size: 16px;">JABATAN PENGANGKUTAN JALAN MALAYSIA</h6>
+                  <h6 style="font-size: 16px;"><b>PERMOHONAN LESEN VOKASIONAL</b></h6>
+              </div>
+              <div class="col-2">   
+                <br/><br/>
+                  <h6>(JPJL8)</h6>
+              </div>
+          </div>     
+              <div class="row" style="padding-top: 10px;margin: auto;">
+                <div class="col-12">   
+                  <label><b>i) Sila baca panduan di muka sebelah sebelum mengisi borang ini</b></label>
+                </div>
+              </div>
+              <div class="row" style="padding-top: 2px;margin: auto;">   
+                <div class="col-12">
+                  <label>ii) Gunakan HURUF BESAR</label>
+                </div>
+              </div>
+              <div class="row" style="padding-top: 2px;margin: auto;">   
+                <div class="col-12">
+                  <label>iii) * Tandakan  dalam petak berkenaan</label>
+                </div>
+              </div>
+          <hr style="border: 1px solid black;" >
+          <div class="row rowhead" style="margin: auto;">  
+              <div class="col-12">
+              <label style="font-size: 14px;"><b>A. JENIS PERMOHONAN</b></label> <span style="padding-left: 20px;"></span>
+              </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <div class="row rowhead" style="margin: auto;">  
+              <div class="col-12">
+              <label style="font-size: 14px;"><b>B. BUTIR-BUTIR PEMOHON</b></label>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-8" style="padding-left: 35px">
+              <label style="font-weight: 600;">1. No. KP / Pasport / Polis / Tentera</label> <span style="padding: 20px;">{{ldata.nricNo}}</span>
+              </div>
+              <div class="col-4" style="padding-left: 35px"> 
+                  <label style="font-weight: 600;">2. Kategori</label> <span style="padding: 20px;"></span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">3. Nama</label> <span style="padding: 20px;">{{ldata.name}}</span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">4. Alamat</label> <span style="padding: 20px;"> {{ldata.address_nric}}</span>
+              </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-4" style="padding-left: 35px">
+            <label style="font-weight: 600;">5. Poskod</label> <span style="padding: 20px;">{{ldata.postal_code}}</span>
+            </div>
+            <div class="col-8" style="padding-left: 35px">
+                <label style="font-weight: 600;">6. Bandar</label> <span style="padding: 20px;">{{ldata.city}}</span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+            <label style="font-weight: 600;">7. Negeri</label> <span style="padding: 20px;">{{ldata.state}}</span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-4" style="padding-left: 35px">
+            <label style="font-weight: 600;">8. Jantina (L / P)</label> <span style="padding: 20px;">{{ldata.state}}</span>
+            </div>
+            <div class="col-8" style="padding-left: 35px">
+                <label style="font-weight: 600;">9. Tarikh Lahir</label> <span style="padding: 20px;">{{ldata.date_of_birth | date : 'dd-MM-yyyy'}}</span>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;">
+          <div class="row rowhead" style="margin: auto;">  
+            <div class="col-12" >
+            <label style="font-size: 14px;"><b>C. BUTIR-BUTIR LESEN</b></label>
+            </div>
+          </div>
+          <div class="row rowGroup"  style="margin: auto;">  
+              <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">1. Tarikh Luput<br/>
+                Lesen Memandu</label> <span style="padding-left: 20px;"></span>
+              </div>
+          </div>
+          <hr style="border: 0.2px dotted black;" >
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">2. Ruangan ini Untuk Permohonan Baru atau Penambahan Kelas Lesen Vokasional Sahaja</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-6"  style="padding-left: 52px">
+            <label style="font-weight: 600;">Tarikh Luput Lesen<br/>
+              Vokasional (jika ada)</label> <span style="padding-left: 20px;"></span>
+            </div>
+            <div class="col-6" style="padding-left: 35px">
+                <label style="font-weight: 600;">No. Lencana (jika ada)</label> <span style="padding-left: 20px;"></span>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-6" style="padding-left: 52px">
+            <label style="font-weight: 600;">Kelas Lesen<br/>
+              Vokasional</label> <span style="padding-left: 20px;"></span>
+            </div>
+            <div class="col-6" style="padding-left: 35px">
+                <label>Kod Kegunaan<br/>
+                  (Untuk kegunaan pejabat)</label> <span style="padding-left: 20px;"></span>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;" >
+          <div class="row rowhead" style="margin: auto;">  
+            <div class="col-12">
+            <label style="font-size: 14px;"><b>D. PENGAKUAN</b></label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">Saya mengaku bahawa segala maklumat yang diberikan di atas adalah benar.</label>
+            </div>
+          </div>
+          <div class="row rowGroup"  style="padding-top:10px;margin: auto;">  
+            <div class="col-6" style="padding-left: 35px">
+              <label style="font-weight: 600;">Tarikh ..........................................................</label>
+            </div>
+            <div class="col-6" style="text-align: center;">
+              <label>...............................................................................</label><br/>
+              <label style="text-align: center;font-weight: 600;">Tandatangan Pemohon</label>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;" >
+          <div class="row rowhead"  style="margin: auto;">  
+            <div class="col-12" >
+            <label style="font-size: 14px;"><b>E. * AKUAN DOKTOR</b></label>
+            </div>
+          </div>
+          <div class="row rowGroup"  style="margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">(Untuk Permohonan Baru atau Pembaharuan Lesen Vokasional Sahaja)</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="padding-left: 45px;margin: auto;">  
+            <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">Saya sahkan pada hari ini telah memeriksa .................................................................................................................... </label> 
+            </div>
+          </div>
+          <div class="row rowGroup"style="margin: auto;" >  
+            <div class="col-12" style="padding-left: 35px">
+              <label style="font-weight: 600;">No. K.P. ........................................................................ dan pada pendapat saya beliau ** sesuai / tidak sesuai untuk</label> 
+            </div>
+          </div>
+          <div class="row" style="padding-top: 10px;">  
+            <div class="col-3" >
+              
+            </div>
+            <div class="col-8">
+                <input type="checkbox"> <label style="font-weight: 600;padding-left: 30px">Memandu Kenderaan Perkhidmatan Awam</label>
+            </div>
+            <div class="col-1">
+              
+            </div>
+          </div>
+          <div class="row">  
+            <div class="col-3">
+              
+            </div>
+            <div class="col-8">
+                <input type="checkbox"> <label style="font-weight: 600;padding-left: 30px">Memandu Kenderaan Barangan</label>
+            </div>
+            <div class="col-1">
+              
+            </div>
+          </div>
+          <div class="row">  
+            <div class="col-3">
+              
+            </div>
+            <div class="col-8">
+                <input type="checkbox"> <label style="font-weight: 600;padding-left: 30px">Bekerja Sebagai Konduktor Bagi Kenderaan Perkhidmatan Awam</label>
+            </div>
+            <div class="col-1">
+              
+            </div>
+          </div>
+
+          <div class="row rowGroup" style="padding-top: 10px;">  
+            <div class="col-6"> 
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Tandatangan Doktor ............................</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="line-height: 1rem;margin: auto;">  
+            <div class="col-6" style="padding-left: 35px;"> 
+              <label style="font-weight: 600;">Tarikh .......................................</label>
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Nama ...............................</label>
+            </div>
+          </div>
+          <div class="row rowGroup" style="line-height: 1rem;">  
+            <div class="col-6"> 
+              <label style="font-weight: 600;padding-left: 35px;" >** Potong yang mana tidak berkenaan</label>
+            </div>
+            <div class="col-6">
+                <label style="font-weight: 600;">Alamat Klinik/Hospital .................................</label>
+            </div>
+          </div>
+          <hr style="border: 1px solid black;" >
+          <div class="row" style="padding-top:10px;padding-bottom: 50px;">   
+            <div class="col-2 labelleft">    
+            </div>
+            <div class="col-8" style="text-align: center;">    
+                <h6 style="font-size: 14px;"><b>KEGUNAAN PEJABAT</b></h6>
+            </div>
+            <div class="col-2">   
+            </div>
+        </div> 
+      </div>
+    </div>

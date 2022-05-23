@@ -1,0 +1,17 @@
+// // overwrite the checkbox background
+// ::ng-deep .mat-checkbox-checked .mat-checkbox-background, 
+// .mat-checkbox-indeterminate .mat-checkbox-background {
+//   background-color: black !important;
+// }
+
+// // overwrite the ripple overlay on hover and click
+// ::ng-deep .mat-checkbox:not(.mat-checkbox-disabled) .mat-checkbox-ripple .mat-ripple-element {
+//   background-color: black !important;
+// }
+
+.statusClass{
+    border-radius: 50px;
+    padding: 10px;
+    color: white;
+    background-color: #008000a6;    
+}

@@ -1,0 +1,611 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<section class="content">
+    <div class="container-fluid">
+        <div class="block-header">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <ul class="breadcrumb breadcrumb-style ">
+                        <li class="breadcrumb-item">
+                            <h4 class="page-title">{{'STUDENT-REGISTRATION.TITLE' | translate}}</h4>
+                        </li>
+                        <!-- <li class="breadcrumb-item bcrumb-1">
+                            <a routerLink="/admin/dashboard/main">
+                                <i class="fas fa-home"></i> Home</a>
+                        </li>
+                        <li class="breadcrumb-item bcrumb-2">
+                            <a href="#" onClick="return false;">Students</a>
+                        </li>
+                        <li class="breadcrumb-item active">Registration</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row clearfix">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <div class="card">
+                    <div class="header">
+                        <h2>
+                        <strong>{{'STUDENT-REGISTRATION.TITLE' | translate}}</strong>
+                        </h2>
+                    </div>
+                    <div class="body">
+                        <mat-horizontal-stepper  [linear]="isLinear" #stepper>
+                        <mat-step [stepControl]="personalDetailsForm">
+                            <form [formGroup]="personalDetailsForm">
+                            <ng-template matStepLabel>{{'STUDENT-REGISTRATION.SUBTITLE1' | translate}}</ng-template>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}*</mat-label>
+                                        <input matInput formControlName="name">
+                                        <mat-icon matSuffix>face</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('name').hasError('required')">
+                                                {{'REG-VALIDATION.Name' | translate}}  
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.IC-TYPE' | translate}}</mat-label>
+                                        <input type="text" matInput [formControl]="nricType" [matAutocomplete]="autoIc">
+                                        <mat-autocomplete #autoIc="matAutocomplete" [displayWith]="displayFn" (optionSelected)="getICTypeChange()">
+                                        <mat-option *ngFor="let option of nricTypeList | async" [value]="option">
+                                            {{option[translateVal]}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="nricType.hasError('required')">
+                                            {{'REG-VALIDATION.NricType' | translate}}
+                                        </mat-error>
+                                      </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}</mat-label>
+                                        <input matInput formControlName="nric_number" mask="000000-00-0000"  [showMaskTyped]="true" [dropSpecialCharacters]="false" (blur)="getNRICNumberChange()">
+                                        <mat-icon matSuffix>confirmation_number</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('nric_number').hasError('required')">
+                                            {{'REG-VALIDATION.NricNum' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}</mat-label>
+                                        <input matInput formControlName="passport_number" [readonly]="personalDetailsForm.get('nric_number').value != ''" [required]="personalDetailsForm.get('nric_number').value == ''" (blur)="getPassportNumberChange()">
+                                        <mat-icon matSuffix>confirmation_number</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('passport_number').hasError('required')">
+                                            {{'REG-VALIDATION.PassportNum' | translate}}
+                                    </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}*</mat-label>
+                                        <input matInput [matDatepicker]="picker" formControlName="date_of_birth">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-error *ngIf="personalDetailsForm.get('date_of_birth').hasError('required')">
+                                            {{'REG-VALIDATION.Dob' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}*</mat-label>
+                                        <mat-select formControlName="gender">
+                                            <mat-option value="Male">Male</mat-option>
+                                            <mat-option value="Female">Female</mat-option>
+                                            <mat-option value="Others">Others</mat-option>
+                                          </mat-select>
+                                          <mat-error *ngIf="personalDetailsForm.get('gender').hasError('required')">
+                                            {{'REG-VALIDATION.Gender' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.PLACEBIRTH' | translate}}*</mat-label>
+                                        <input type="text" matInput [formControl]="placeBirth" [matAutocomplete]="autoPlaceBirth">
+                                        <mat-autocomplete #autoPlaceBirth="matAutocomplete" [displayWith]="displayFnPlaceBirth">
+                                        <mat-option *ngFor="let option of placeBirthList | async" [value]="option">
+                                            {{option[translateVal]}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="placeBirth.hasError('required')">
+                                                {{'REG-VALIDATION.POB' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="placeBirth.value.id == 457">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.OTHER' | translate}}</mat-label>
+                                        <input matInput formControlName="other_placebirth" >
+                                        
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.NATIONALITY' | translate}}*</mat-label>
+                                        <input type="text" matInput [formControl]="nationality" [matAutocomplete]="autoNation">
+                                        <mat-autocomplete #autoNation="matAutocomplete" [displayWith]="displayFnNationality" (optionSelected)="getNationalityChange()">
+                                        <mat-option *ngFor="let option of nationalityList | async" [value]="option">
+                                            {{option.country_name}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="nationality.hasError('required')">
+                                            {{'REG-VALIDATION.Nationality' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}*</mat-label>
+                                        <input matInput formControlName="ic_address">
+                                        <mat-error *ngIf="personalDetailsForm.get('ic_address').hasError('required')">
+                                            {{'REG-VALIDATION.NricAdd' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                           
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.ADDRESS1' | translate}}</mat-label>
+                                        <input matInput formControlName="address1" >
+                                        
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.ADDRESS2' | translate}}</mat-label>
+                                        <input matInput formControlName="address2">
+                                        
+                                    </mat-form-field>
+                                    </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.POSTAL-CODE' | translate}}*</mat-label>
+                                        <input type="text" matInput [formControl]="postalCode" [matAutocomplete]="autoPostalCode" >
+                                        <mat-autocomplete #autoPostalCode="matAutocomplete" [displayWith]="displayFnPostalCode" (optionSelected)="getPostalCodeChange()">
+                                        <mat-option *ngFor="let option of postalCodeList | async" [value]="option">
+                                            {{option.postal_code}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="postalCode.hasError('required')">
+                                            {{'REG-VALIDATION.PostalCode' | translate}}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                           
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}*</mat-label>
+                                        <input matInput formControlName="city">
+                                        <mat-icon matSuffix>location_city</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('city').hasError('required')">
+                                            {{'REG-VALIDATION.City' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}*</mat-label>
+                                        <input matInput formControlName="state">
+                                        <mat-icon matSuffix>business</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('state').hasError('required')">
+                                            {{'REG-VALIDATION.State' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}*</mat-label>
+                                        <input matInput formControlName="email_address">
+                                        <mat-icon matSuffix>email</mat-icon>
+                                        <mat-error *ngIf="personalDetailsForm.get('email_address').hasError('email') && personalDetailsForm.get('email_address').touched">
+                                            {{'REG-VALIDATION.Email' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}*</mat-label>
+                                        <input matInput type='tel' pattern="[0-9]*" prefix='+6 ' maxlength="13" mask="0000000000000" formControlName="mobile_number">
+                                        <mat-icon matSuffix>phone</mat-icon> 
+                                        <mat-error *ngIf="validate.mobile_number.touched || validate.mobile_number.invalid">
+                                            {{'REG-VALIDATION.Mob' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.RACE' | translate}}*</mat-label>
+                                        <!-- <input matInput formControlName="race" required> -->
+                                        <!-- <mat-icon matSuffix>face</mat-icon> -->
+                                            <input type="text" matInput [formControl]="race" [matAutocomplete]="autoRace">
+                                            <mat-autocomplete #autoRace="matAutocomplete" [displayWith]="displayFnRace" (optionSelected)="onSelectionChange($event)">
+                                            <mat-option *ngFor="let raceoption of raceList | async" [value]="raceoption">
+                                                {{raceoption[translateVal]}}
+                                            </mat-option>
+                                            </mat-autocomplete>
+                                            <mat-error  *ngIf="race.hasError('required')">
+                                                {{'REG-VALIDATION.Race' | translate}} 
+                                            </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2" *ngIf="race.value.id == 4">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.OTHERRACE' | translate}}</mat-label>
+                                        <input matInput formControlName="other_race" >
+                                       
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button matStepperNext color="primary"
+                                 [disabled]="!personalDetailsForm.valid || !race.valid || !nricType.valid || !nationality.valid || !postalCode.valid  || !placeBirth.valid" (click)="getPersonalDetails()">{{'BUTTON.NEXT-BTN' | translate}}</button>
+                            </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="preferenceForm">
+                            <form [formGroup]="preferenceForm">
+                            <ng-template matStepLabel>{{'STUDENT-REGISTRATION.SUBTITLE2' | translate}}</ng-template>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.PREFERENCE' | translate}}*</mat-label>
+                                        <input type="text" matInput [formControl]="preference" [matAutocomplete]="autoPreference">
+                                        <mat-autocomplete #autoPreference="matAutocomplete" [displayWith]="displayFnPreference">
+                                        <mat-option *ngFor="let raceoption of preferenceList | async" [value]="raceoption">
+                                            {{raceoption[translateVal]}}
+                                        </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngIf="preference.hasError('required')">
+                                            {{'REG-VALIDATION.PrefLAng' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.EMERGENCY-NAME' | translate}}</mat-label>
+                                        <input matInput formControlName="emergency_name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.EMERGENCY-NUMBER' | translate}}</mat-label>
+                                        <input matInput formControlName="emergency_number">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.USERNAME' | translate}}</mat-label>
+                                        <input matInput formControlName="user_name" required>
+                                        <mat-error *ngIf="preferenceForm.get('user_name').hasError('required')">
+                                            {{'REG-VALIDATION.UserName' | translate}} 
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <mat-form-field class="example-full-width" appearance="outline">
+                                        <mat-label>{{'STUDENT-REGISTRATION.LIST.PASSWORD' | translate}}</mat-label>
+                                        <input matInput formControlName="password"
+                                            [type]="hide ? 'password' : 'text'" required>
+                                            <a
+                                            class="show-pwd-icon"
+                                            href="#"
+                                            onClick="return false;"
+                                            matSuffix
+                                            (click)="hide = !hide"
+                                            [attr.aria-label]="'Hide password'"
+                                            [attr.aria-pressed]="hide"
+                                        > <mat-icon>{{
+                                                hide ? "visibility_off" : "visibility"
+                                          }}</mat-icon></a>
+                                          <mat-hint>{{'STUDENT-REGISTRATION.LIST.HINT'|translate}}</mat-hint>
+                                        <mat-error *ngIf="preferenceForm.get('password').hasError('required')">
+                                                {{'STUDENT-REGISTRATION.LIST.PASSWORD' | translate}}  
+                                        </mat-error>
+                                        <mat-error *ngIf="preferenceForm.get('password').hasError('pattern')">
+                                            {{'REG-VALIDATION.Passwoord' | translate}} 
+                                    </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div>
+                                <button mat-raised-button matStepperPrevious color="warn" class="msr-2">{{'BUTTON.BACK-BTN' | translate}}</button>
+                                <button mat-raised-button  color="primary"
+                                [disabled]="!preferenceForm.valid || !preference.valid" (click)="getPreferenceDetails(stepper)">{{'BUTTON.NEXT-BTN' | translate}}</button>
+                            </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="documentForm">
+                            <form [formGroup]="documentForm">
+                            <ng-template matStepLabel>{{'STUDENT-REGISTRATION.SUBTITLE3' | translate}}</ng-template>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                  <div class="row">
+                                        <div class="col-6">
+                                            <img src="{{photo_preview}}" *ngIf="photo_preview" style="width:100%;height:100%">
+                                        </div>
+                                        <div [ngClass]="{
+                                            'col-6': photo_preview,
+                                            'col-12': !photo_preview
+                                        }">
+                                            <mat-form-field class="example-full-width">
+                                                <ngx-mat-file-input formControlName="photo" placeholder="{{'STUDENT-REGISTRATION.LIST.PHOTO' | translate}}" (change)="onFileChangePhoto($event,'photo')" required>
+                                                </ngx-mat-file-input>
+                                                <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                <mat-error *ngIf="documentForm.get('photo').hasError('required')">
+                                                        {{'STUDENT-REGISTRATION.LIST.PHOTO' | translate}}  
+                                                </mat-error>
+                                                <mat-error *ngIf="documentForm.get('photo').hasError('maxContentSize')">
+                                                    The total size must not exceed 200kb
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                   </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img src="{{nric_front_preview}}" *ngIf="nric_front_preview" style="width:100%;height:100%">
+                                        </div>
+                                        <div [ngClass]="{
+                                            'col-6': nric_front_preview,
+                                            'col-12': !nric_front_preview
+                                        }">
+                                            <mat-form-field class="example-full-width">
+                                                <ngx-mat-file-input formControlName="nric_front" placeholder="{{'STUDENT-REGISTRATION.LIST.NRIC-FRONT' | translate}}" (change)="onFileChangePhoto($event,'nric_front')" [required]="personalDetailsForm.get('nric_number').value != ''">
+                                                </ngx-mat-file-input>
+                                                <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                <mat-error *ngIf="documentForm.get('nric_front').hasError('required')">
+                                                        {{'STUDENT-REGISTRATION.LIST.NRIC-FRONT' | translate}}  
+                                                </mat-error>
+                                                <mat-error *ngIf="documentForm.get('nric_front').hasError('maxContentSize')">
+                                                    The total size must not exceed 200kb
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img src="{{nric_rear_preview}}" *ngIf="nric_rear_preview" style="width:100%;height:100%">
+                                        </div>
+                                        <div [ngClass]="{
+                                            'col-6': nric_rear_preview,
+                                            'col-12': !nric_rear_preview
+                                        }">
+                                            <mat-form-field class="example-full-width">
+                                                <ngx-mat-file-input formControlName="nric_rear" placeholder="{{'STUDENT-REGISTRATION.LIST.NRIC-REAR' | translate}}" (change)="onFileChangePhoto($event,'nric_rear')" [required]="personalDetailsForm.get('nric_number').value != ''">
+                                                </ngx-mat-file-input>
+                                                <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                <mat-error *ngIf="documentForm.get('nric_rear').hasError('required')">
+                                                        {{'STUDENT-REGISTRATION.LIST.NRIC-REAR' | translate}}  
+                                                </mat-error>
+                                                <mat-error *ngIf="documentForm.get('nric_rear').hasError('maxContentSize')">
+                                                    The total size must not exceed 200kb
+                                                </mat-error>
+                                            </mat-form-field>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row"><br/></div>
+                            <div class="row">
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <img src="{{passport_front_preview}}" *ngIf="passport_front_preview" style="width:100%;height:100%">
+                                        </div>
+                                        <div [ngClass]="{
+                                            'col-6': passport_front_preview,
+                                            'col-12': !passport_front_preview
+                                        }">
+                                        <mat-form-field class="example-full-width">
+                                            <ngx-mat-file-input formControlName="passport_front"  placeholder="{{'STUDENT-REGISTRATION.LIST.PASSPORT-FRONT' | translate}}" (change)="onFileChangePhoto($event,'passport_front')" [required]="personalDetailsForm.get('passport_number').value !=''">
+                                            </ngx-mat-file-input>
+                                            <mat-icon matSuffix>cloud_upload</mat-icon>
+                                            <mat-error *ngIf="documentForm.get('passport_front').hasError('required')">
+                                                    {{'STUDENT-REGISTRATION.LIST.PASSPORT-FRONT' | translate}}  
+                                            </mat-error>
+                                            <mat-error *ngIf="documentForm.get('passport_front').hasError('maxContentSize')">
+                                                The total size must not exceed 200kb
+                                            </mat-error>
+                                        </mat-form-field>
+                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
+                                    <div class="row">
+                                        <div class="col-6" *ngIf="work_permit_preview">
+                                            <img src="{{work_permit_preview}}"  style="width:100%;height:100%">
+                                        </div>
+                                        <div [ngClass]="{
+                                            'col-6': work_permit_preview,
+                                            'col-12': !work_permit_preview
+                                        }">
+                                            <mat-form-field class="example-full-width">
+                                                <ngx-mat-file-input formControlName="work_permit"  placeholder="{{'STUDENT-REGISTRATION.LIST.WORK-PERMIT' | translate}}" (change)="onFileChangePhoto($event,'work_permit')" [required]="nricType.value.id == 5">
+                                                </ngx-mat-file-input>
+                                                <mat-icon matSuffix>cloud_upload</mat-icon>
+                                                <mat-error *ngIf="documentForm.get('work_permit').hasError('required')">
+                                                        {{'STUDENT-REGISTRATION.LIST.WORK-PERMIT' | translate}}  
+                                                </mat-error>
+                                                <mat-error *ngIf="documentForm.get('work_permit').hasError('maxContentSize')">
+                                                    The total size must not exceed 200kb
+                                                </mat-error>
+                                            </mat-form-field>
+                                          </div>
+                                        </div>
+                                </div>
+                               
+                            </div>
+                            <div class="row"><br/></div>
+                            <div>
+                            <button mat-raised-button matStepperPrevious color="warn" class="msr-2">{{'BUTTON.BACK-BTN' | translate}}</button>
+                            <button mat-raised-button color="primary" (click)="saveStudentData(showStudent)" [disabled]="!documentForm.valid">{{'BUTTON.ADD-BTN' | translate}}</button>
+                            </div>
+                        </form>
+                        </mat-step>
+                        </mat-horizontal-stepper>
+                    </div>
+                        <!-- <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+                                <button class="btn-space" [disabled]="!stdForm.valid " mat-raised-button
+                                    color="primary">Submit</button>
+                                <button type="button" mat-button>Cancel</button>
+                            </div>
+                        </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<ng-template #showStudent let-modal>
+        <div class="modal-header deleteRowModal">
+        <h4 class="modal-title" id="modal-basic-title"> <div class="modal-header ">
+            <div class="modal-about">
+                <div class="font-weight-bold p-t-10 font-17">
+                    {{'STUDENT-REGISTRATION.CONFIRMTITLE' | translate}}</div>
+            </div>
+            </div>
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true"><i class="material-icons">close</i></span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE1' | translate}}</h5>
+                <ul class="clearfix">
+                    <li>
+                        <p><span class="font-weight-bold"> <b>{{'STUDENT-REGISTRATION.LIST.NAME' | translate}}:  </b></span><span>{{confirmPersonalData.name}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.IC-TYPE' | translate}}: </b></span><span>{{nricType.value[translateVal]}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC' | translate}}: </b></span><span>{{confirmPersonalData.nric_number}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.passport_number">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT' | translate}}: </b></span><span>{{confirmPersonalData.passport_number}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.DOB' | translate}}: </b></span><span>{{confirmPersonalData.date_of_birth | date:'dd/MM/yyyy'}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.GENDER' | translate}}: </b></span><span>{{confirmPersonalData.gender}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PLACEBIRTH' | translate}}: </b></span><span>{{placeBirth.value[translateVal]}}</span></p>
+                    </li>
+                    <li  *ngIf="confirmPersonalData.other_placebirth">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.OTHER' | translate}}: </b></span><span>{{confirmPersonalData.other_placebirth}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NATIONALITY' | translate}}: </b></span><span>{{nationality.value.country_name}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.IC-ADDRESS' | translate}}: </b></span><span>{{confirmPersonalData.ic_address}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.address1">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.ADDRESS1' | translate}}: </b></span><span>{{confirmPersonalData.address1}}</span></p>
+                    </li>
+                    <li *ngIf="confirmPersonalData.address2">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.ADDRESS2' | translate}}: </b></span><span>{{confirmPersonalData.address2}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.POSTAL-CODE' | translate}}: </b></span><span>{{postalCode.value.postal_code}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.CITY' | translate}}: </b></span><span>{{confirmPersonalData.city}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.STATE' | translate}}: </b></span><span>{{confirmPersonalData.state}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMAIL' | translate}}: </b></span><span>{{confirmPersonalData.email_address}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.MOBILENO' | translate}}: </b></span><span>{{confirmPersonalData.mobile_number}}</span></p>
+                    </li>
+                    <li>
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.RACE' | translate}}: </b></span> <span>{{race.value[translateVal]}}</span></p>
+                    </li>
+                    <li  *ngIf="confirmPersonalData.other_race">
+                        <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.OTHERRACE' | translate}}: </b></span><span>{{confirmPersonalData.other_race}}</span></p>
+                    </li>
+                </ul>
+                <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE2' | translate}}</h5>
+                    <ul class="clearfix">
+                        <li *ngIf="preference.value[translateVal]">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.PREFERENCE' | translate}}: </b></span><span>{{preference.value[translateVal]}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.emergency_name">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.EMERGENCY-NAME' | translate}}: </b></span><span>{{confirmPreferenceData.emergency_name}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.emergency_number">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EMERGENCY-NUMBER' | translate}}: </b></span><span>{{confirmPreferenceData.emergency_number}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.user_name">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.USERNAME' | translate}}: </b></span><span>{{confirmPreferenceData.user_name}}</span></p>
+                        </li>
+                        <li *ngIf="confirmPreferenceData.password">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSWORD' | translate}}: </b></span><span>{{confirmPreferenceData.password}}</span></p>
+                        </li>
+                        <!-- <li *ngIf="existing_license.value[translateVal]">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE' | translate}}: </b></span><span>{{existing_license.value[translateVal]}}</span></p>
+                        </li> -->
+                        <li *ngIf="confirmPreferenceData.expiry_date">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXPIRYDATE' | translate}}: </b></span><span>{{confirmPreferenceData.expiry_date | date:'dd/MM/yyyy'}}</span></p>
+                        </li>
+                    </ul>
+                    <h5 style="text-align:center">{{'STUDENT-REGISTRATION.SUBTITLE3' | translate}}</h5>
+                    <ul class="clearfix">
+                        <li *ngIf="documentForm.value.photo_name._fileNames">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.PHOTO' | translate}}: </b></span><span>{{documentForm.value.photo_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="documentForm.value.nric_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b> {{'STUDENT-REGISTRATION.LIST.NRIC-FRONT' | translate}}: </b></span><span>{{documentForm.value.nric_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="documentForm.value.nric_rear_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.NRIC-REAR' | translate}}: </b></span><span>{{documentForm.value.nric_rear_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="documentForm.value.passport_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.PASSPORT-FRONT' | translate}}:</b> </span><span>{{documentForm.value.passport_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="documentForm.value.work_permit_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.WORK-PERMIT' | translate}}: </b></span><span>{{documentForm.value.work_permit_name._fileNames}}</span></p>
+                        </li>
+                        <!-- <li *ngIf="documentForm.value.existing_license_front_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-FRONT' | translate}}: </b></span><span>{{documentForm.value.existing_license_front_name._fileNames}}</span></p>
+                        </li>
+                        <li *ngIf="documentForm.value.existing_license_rear_name._fileNames">
+                            <p><span class="font-weight-bold"><b>{{'STUDENT-REGISTRATION.LIST.EXISTING-LICENSE-REAR' | translate}}: </b></span><span>{{documentForm.value.existing_license_rear_name._fileNames}}</span></p>
+                        </li> -->
+                    </ul>
+                </div>
+            <div class="modal-footer">
+            <div class="button-demo">
+                <button mat-raised-button type="submit" color="primary" (click)="setConfirmStudentDetails()">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+                <button mat-button type="button" (click)="modal.close()">{{'BUTTON.CANCEL-BTN' | translate}}</button>
+            </div>
+            </div>
+    </ng-template>

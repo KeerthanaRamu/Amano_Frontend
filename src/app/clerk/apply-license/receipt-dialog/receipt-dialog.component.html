@@ -1,0 +1,97 @@
+<div id="PrintReceipt">
+<div mat-dialog-title id="printable">
+    <div class="row" style="text-align: center;">
+        <div class="col-12">
+            <img src="{{logoURL}}" class="col-6" style="height: 100px;width: 200px;
+            float: left;padding-left: 50px;" alt="Logo">
+            <p class="col-6" style="float: right;padding-top: 45px;">Payment Receipt</p>
+        </div>
+    </div>
+
+<div class="row" style="line-height: 2.0;">
+    <p style="color: black; font-size: 12px;text-align: center;">{{clientAddress1}}
+      <br/> {{clientAddress2}}
+      <br/> {{clientEmail}}</p></div>
+</div>
+
+<mat-dialog-content id="printable2">
+<div class="center" >
+<table>
+    <tr >
+        <td style="width:220px">
+            Name : 
+        </td>
+        <td>
+            {{data.name}}
+        </td>
+    </tr>
+    <tr >
+        <td style="width:220px">
+            Enrollment No : 
+        </td>
+        <td>
+            {{enrollment_no}}
+        </td>
+    </tr>
+    <td>
+        E-mail : 
+    </td>
+    <td>
+        {{data.email_id}}
+    </td>
+    <tr>
+        <td>
+            Contact Number :
+        </td>
+        <td>
+            {{data.mobile_number}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            License class:
+        </td>
+        <td>
+            <span [innerHTML]="licenseData"></span>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Package:
+        </td>
+        <td>
+            {{packDt.package_english}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Package Offer:
+        </td>
+        <td>
+            {{packDt.package_offers}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Amount:
+        </td>
+        <td>
+            ${{payInfo.payment_amount}}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Payment Method:
+        </td>
+        <td>
+            {{payInfo.payment_method}}
+        </td>
+    </tr>
+    <tr></tr>
+</table>
+</div>
+</mat-dialog-content>
+</div>
+<mat-dialog-actions>
+    <button mat-flat-button color="primary" (click)="print()" >PRINT </button>
+</mat-dialog-actions>

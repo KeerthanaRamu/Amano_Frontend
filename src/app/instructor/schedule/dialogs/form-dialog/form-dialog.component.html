@@ -1,0 +1,69 @@
+<ngx-spinner
+bdColor="rgba(51,51,51,0.8)"
+size="medium"
+color="#fff"
+type="ball-scale-multiple"
+>
+<p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
+<div class="addContainer" >
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{'SCHEDULE.VIEWTITLE' | translate}} for {{calendar.title}}</div>
+        </div>
+      </div>
+    </div>
+    <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content style="overflow-y: auto;overflow-x: hidden;">
+      <div class="row">
+        <ul class="list-group list-group-unbordered">
+          <li class="list-group-item">
+            <b>Student Details </b>
+            <div class="profile-desc-item float-end"></div>
+          </li>
+          </ul>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 table-responsive">
+          <ul style="list-style: none;" *ngFor="let timeDt of timeArray; let i=index">
+              <li>{{timeDt.range}}</li>
+              <table id="customers" *ngIf="timeDt.studentList.length>0">
+                <tr>
+                  <th>Name</th>
+                  <!-- <th>Enrollment No</th> -->
+                  <th>Id Number</th>
+                  <th>Mobile No</th>
+                  <th>Status</th>
+                </tr>
+                <tr *ngFor="let studDt of timeDt.studentList">
+                  <td>{{studDt.name}}</td>
+                  <!-- <td>{{studDt.enrollment_no}}</td> -->
+                  <td>{{studDt.id_number}}</td>
+                  <td>{{studDt.mobile_number}}</td>
+                  <td> <mat-checkbox [checked]="studDt.schedule_status" [disabled]="studDt.schedule_status == 1"  [value]="studDt.schedule_status" color="primary"
+                    (change)="confirmUpdate($event, timeDt,studDt,addRemarks)">
+                  </mat-checkbox></td>
+                </tr>
+              </table>
+                <li *ngIf="timeDt.studentList.length == 0">
+                  <span style="padding: 5px;margin-left: 16px;"> -- </span>
+                </li>
+            </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 " *ngIf="selectedStudentData.length > 0">
+        <button style="float: right;" mat-raised-button type="submit" color="primary" (click)="updateScheduleStatus();dialogRef.close()">{{'BUTTON.CONFIRM-BTN' | translate}}</button>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+
