@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://kanaga.my:8443',
+  apiUrl: 'https://localhost:8080',
   merchantId:'754164580684682',
   secretKey:'33927-100',
   payUrl:'https://app.senangpay.my/payment/754164580684682',  //url+'/merchantId'

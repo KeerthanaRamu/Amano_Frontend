@@ -72,7 +72,7 @@ type="ball-scale-multiple"
                             </div>
                             <ngx-datatable #table  class='material' 
                             [rows]="data" [columns]="columns" [sortType]="'multi'"
-                            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5">
+                            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
                            
                             <ngx-datatable-column [flexGrow]="1"  name="{{'LICENSE.LIST.LICENSE-CLASS' | translate}}" prop="license_class" ></ngx-datatable-column>
                             <ngx-datatable-column [flexGrow]="1"  name="{{'LICENSE.LIST.MIN-AGE' | translate}}" prop="minimum_age"></ngx-datatable-column>

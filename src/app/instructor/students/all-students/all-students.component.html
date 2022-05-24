@@ -66,7 +66,7 @@ type="ball-scale-multiple"
                             </div>
                             <ngx-datatable #table class='material' style="overflow-x: visible;"
                             [rows]="data" [columns]="columns" [sortType]="'multi'"
-                            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="5">
+                            [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'auto'" [limit]="10">
                                 <ngx-datatable-column name="Image" [flexGrow]="1"  sortable="false" prop="profile_img" >
                                 <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
                                     <td class="table-img padding-0">

@@ -53,7 +53,7 @@ type="ball-scale-multiple"
                         </ul>
                     </div>
                     <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
-                        [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="5">
+                        [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10">
                         
                         <ngx-datatable-column name="{{'MESSAGE.LIST.MESSAGE-TYPE' | translate}}" prop="status" [width]="130"></ngx-datatable-column>
                         <!-- <ngx-datatable-column *ngFor="let col of columns" [name]="col.name">

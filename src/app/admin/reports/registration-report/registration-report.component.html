@@ -75,7 +75,7 @@ type="ball-scale-multiple"
                         </form>
                         </div>
                         <ngx-datatable #table class="material" [rows]="data" [columns]="columns" [sortType]="'multi'"
-                        [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="5">
+                        [columnMode]="'force'" [headerHeight]="50" [footerHeight]="50" [rowHeight]="'60'" [limit]="10">
                         <!-- user image -->
                         <ngx-datatable-column name="{{'EMPLOYEE.LIST.PROFILE-IMG' | translate}}" sortable="false" prop="profile_img" [width]="100">
                         <ng-template let-row="data" let-value="value" let-i="index" ngx-datatable-cell-template>
