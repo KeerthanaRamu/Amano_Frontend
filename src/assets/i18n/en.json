@@ -234,6 +234,8 @@
         "LICENSE-FLOW":"License Flow",
         "LICENSE-IMAGE":"License Image",
         "CDL-REQ":"Have been holding  (CDL) for at least one year.",
+        "GDL-LICENSE":"GDL License",
+        "PSV-LICENSE":"PSV License",
         "GDL-PRACTICAL":"GDL Practical",
         "PSV-PRACTICAL":"PSV Practical",
         "ACTIVE":"Active",
